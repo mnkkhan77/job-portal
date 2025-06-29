@@ -1,0 +1,126 @@
+{
+  "info": {
+    "_postman_id": "f2c8a4e0-1111-433b-b222-123456789abc",
+    "name": "Job-Portal API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api" },
+    { "key": "userId",  "value": "1" },
+    { "key": "jobId",   "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Jobs",
+      "item": [
+        {
+          "name": "List jobs",
+          "request": { "method": "GET", "url": "{{baseUrl}}/jobs" }
+        },
+        {
+          "name": "Get job",
+          "request": { "method": "GET", "url": "{{baseUrl}}/jobs/{{jobId}}" }
+        },
+        {
+          "name": "Create job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/jobs",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\":\"DevOps Engineer\",\n  \"company\":\"CloudSphere\",\n  \"location\":\"Remote\",\n  \"experience\":\"3+ years\",\n  \"minSalary\":900000,\n  \"maxSalary\":1400000,\n  \"description\":\"Set up CI/CD…\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update job",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/jobs/{{jobId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\":\"DevOps Engineer (Updated)\",\n  \"company\":\"CloudSphere\",\n  \"location\":\"Remote\",\n  \"experience\":\"3+ years\",\n  \"minSalary\":950000,\n  \"maxSalary\":1500000,\n  \"description\":\"Updated desc\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete job",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/jobs/{{jobId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List users",
+          "request": { "method": "GET", "url": "{{baseUrl}}/users" }
+        },
+        {
+          "name": "Get user",
+          "request": { "method": "GET", "url": "{{baseUrl}}/users/{{userId}}" }
+        },
+        {
+          "name": "Create user",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/users",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\":\"jane\",\n  \"email\":\"jane@mail.com\",\n  \"password\":\"secret\",\n  \"role\":\"user\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update user (role → admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/users/{{userId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\":\"john\",\n  \"email\":\"john@mail.com\",\n  \"role\":\"admin\",\n  \"password\":\"\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete user",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/users/{{userId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Saved Jobs",
+      "item": [
+        {
+          "name": "Save job",
+          "request": { "method": "POST", "url": "{{baseUrl}}/users/{{userId}}/saved/{{jobId}}" }
+        },
+        {
+          "name": "List saved",
+          "request": { "method": "GET", "url": "{{baseUrl}}/users/{{userId}}/saved" }
+        },
+        {
+          "name": "Unsave job",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/users/{{userId}}/saved/{{jobId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Applied Jobs",
+      "item": [
+        {
+          "name": "Apply to job",
+          "request": { "method": "POST", "url": "{{baseUrl}}/users/{{userId}}/applied/{{jobId}}" }
+        },
+        {
+          "name": "List applied",
+          "request": { "method": "GET", "url": "{{baseUrl}}/users/{{userId}}/applied" }
+        }
+      ]
+    }
+  ]
+}
