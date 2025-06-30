@@ -25,7 +25,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import useNavBarLogic from "../../hooks/useNavBarLogic";
+import useNavBarLogic from "./../../hooks/useNavBarLogic";
 
 const Navbar = ({ navLinks }) => {
   const {
