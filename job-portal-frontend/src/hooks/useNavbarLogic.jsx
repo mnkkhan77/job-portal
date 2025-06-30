@@ -1,11 +1,11 @@
 import { useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ColorModeContext } from "../contexts/CustomThemeProvider";
 import { logout } from "../utils/auth";
-import { ColorModeContext } from "./../contexts/CustomThemeProvider";
 import { useAuth } from "./useAuth";
 
-const useNavbarLogic = () => {
+const useNavBarLogic = () => {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
   const { isAuthenticated, username, role } = useAuth();
@@ -47,4 +47,4 @@ const useNavbarLogic = () => {
   };
 };
 
-export default useNavbarLogic;
+export default useNavBarLogic;

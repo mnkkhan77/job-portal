@@ -25,7 +25,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import useNavbarLogic from "../../hooks/useNavBarLogic";
+import useNavBarLogic from "../../hooks/useNavBarLogic";
 
 const Navbar = ({ navLinks }) => {
   const {
@@ -43,7 +43,7 @@ const Navbar = ({ navLinks }) => {
     canShow,
     setDrawerOpen,
     navigate,
-  } = useNavbarLogic();
+  } = useNavBarLogic();
 
   return (
     <>
