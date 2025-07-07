@@ -11,7 +11,7 @@ export default function JobCard({ job }) {
   const location = useLocation();
 
   const isSaved = savedJobs.some((j) => j.id === job.id);
-  const canSave = role !== "admin";
+  const canSave = isAuthenticated && role !== "admin";
 
   const handleToggle = async () => {
     if (!isAuthenticated) {
