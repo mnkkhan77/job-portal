@@ -1,48 +1,35 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import jobsData from "../../data/jobs.json";
-import { useAuth } from "../../hooks/useAuth";
-import { applyToJob } from "../../utils/appliedJobs";
+// src/components/job/JobDetails.jsx
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { useAuth } from "../../hooks/auth/useAuth";
+import useJob from "../../hooks/jobs/useJob";
+import { useJobActions } from "../../hooks/jobs/useJobActions";
 
 export default function JobDetails() {
   const { id } = useParams();
-  const job = jobsData.find((j) => j.id === parseInt(id, 10));
-
-  const { isAuthenticated, role } = useAuth();
+  const { job, loading } = useJob(id);
   const navigate = useNavigate();
-  const location = useLocation();
 
-  /* ---------- handlers ---------- */
-  const handleApply = () => {
-    // gate: redirect to login if not authenticated
-    if (!isAuthenticated) {
-      navigate("/login", { state: { from: location } });
-      return;
-    }
-    applyToJob(job);
-    alert("Job applied successfully!");
-  };
+  const { role } = useAuth(); // ✅ Add this line
+  const { handleApply, handleSave, canSave, canApply, loadingApplied } =
+    useJobActions(job || {});
 
-  const handleSaveJob = () => {
-    const saved = JSON.parse(localStorage.getItem("savedJobs")) || [];
-    const exists = saved.find((j) => j.id === job.id);
+  // Loading the job itself
+  if (loading)
+    return (
+      <Box textAlign="center" py={8}>
+        <CircularProgress />
+      </Box>
+    );
 
-    if (!isAuthenticated) {
-      navigate("/login", { state: { from: location } });
-      return;
-    }
-
-    if (!exists) {
-      localStorage.setItem("savedJobs", JSON.stringify([...saved, job]));
-      window.dispatchEvent(new Event("storage"));
-      alert("Job saved!");
-    } else {
-      alert("Job already saved.");
-    }
-  };
-
-  /* ---------- UI ---------- */
-  if (!job) {
+  if (!job)
     return (
       <Box textAlign="center" py={8}>
         <Typography variant="h5">Job not found</Typography>
@@ -51,7 +38,6 @@ export default function JobDetails() {
         </Button>
       </Box>
     );
-  }
 
   return (
     <Box
@@ -83,19 +69,32 @@ export default function JobDetails() {
       </Typography>
 
       <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
-        <Button
-          variant="contained"
-          color="secondary"
-          fullWidth
-          onClick={handleApply}
-        >
-          Apply Now
-        </Button>
-
+        {/* Only show if not admin */}
         {role !== "admin" && (
-          <Button variant="outlined" onClick={handleSaveJob}>
-            Save Job
-          </Button>
+          <>
+            {loadingApplied ? (
+              <CircularProgress size={24} />
+            ) : canApply ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                fullWidth
+                onClick={handleApply}
+              >
+                Apply Now
+              </Button>
+            ) : (
+              <Button disabled variant="outlined" fullWidth>
+                Already Applied
+              </Button>
+            )}
+
+            {canSave && (
+              <Button variant="outlined" onClick={handleSave}>
+                Save Job
+              </Button>
+            )}
+          </>
         )}
       </Stack>
     </Box>

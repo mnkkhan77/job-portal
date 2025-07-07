@@ -6,6 +6,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import useAdminMetrics from "./../../hooks/admin/useAdminMetrics";
 
 const StatCard = ({ label, value }) => (
   <Card
@@ -28,6 +29,7 @@ const StatCard = ({ label, value }) => (
 
 export default function AdminHome() {
   const theme = useTheme();
+  const { jobCount, userCount, loading } = useAdminMetrics();
 
   return (
     <Box
@@ -46,9 +48,8 @@ export default function AdminHome() {
         alignItems="center"
         sx={{ mt: 2 }}
       >
-        <StatCard label="Total Jobs" value={24} />
-        <StatCard label="Total Users" value={87} />
-        <StatCard label="Applications" value={142} />
+        <StatCard label="Total Jobs" value={jobCount} />
+        <StatCard label="Total Users" value={userCount} />
       </Stack>
     </Box>
   );

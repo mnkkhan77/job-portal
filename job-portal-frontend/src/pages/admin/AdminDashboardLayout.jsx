@@ -24,9 +24,9 @@ import {
 } from "@mui/material";
 import { useContext, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { logout } from "../../api/auth";
 import { ColorModeContext } from "../../contexts/CustomThemeProvider";
-import { useAuth } from "../../hooks/useAuth";
-import { logout } from "../../utils/auth";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 const drawerWidth = 240;
 
@@ -48,27 +48,65 @@ const AdminDashboardLayout = () => {
     navigate("/login");
   };
 
+  const getItemStyles = (path) => ({
+    borderRadius: 1,
+    mx: 1,
+    my: 0.5,
+    backgroundColor:
+      location.pathname === path
+        ? theme.palette.mode === "dark"
+          ? "#0d47a1"
+          : "#bbdefb"
+        : "transparent",
+    color:
+      location.pathname === path
+        ? theme.palette.mode === "dark"
+          ? "#fff"
+          : "#0d47a1"
+        : "inherit",
+    "&:hover": {
+      backgroundColor: theme.palette.mode === "dark" ? "#1565c0" : "#e3f2fd",
+    },
+  });
+
   const drawer = (
     <Box>
-      <Typography variant="h6" sx={{ p: 2 }}>
+      <Typography
+        variant="h6"
+        sx={{
+          p: 2,
+          fontWeight: "bold",
+          color: theme.palette.mode === "dark" ? "#90caf9" : "#0d47a1",
+        }}
+      >
         Admin Panel
       </Typography>
+
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton onClick={() => navigate("/admin")}>
+          <ListItemButton
+            onClick={() => navigate("/admin")}
+            sx={getItemStyles("/admin")}
+          >
             <ListItemText primary="Dashboard" />
           </ListItemButton>
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton onClick={() => navigate("/admin/jobs")}>
+          <ListItemButton
+            onClick={() => navigate("/admin/jobs")}
+            sx={getItemStyles("/admin/jobs")}
+          >
             <ListItemText primary="Manage Jobs" />
           </ListItemButton>
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton onClick={() => navigate("/admin/users")}>
+          <ListItemButton
+            onClick={() => navigate("/admin/users")}
+            sx={getItemStyles("/admin/users")}
+          >
             <ListItemText primary="Manage Users" />
           </ListItemButton>
         </ListItem>
@@ -155,6 +193,9 @@ const AdminDashboardLayout = () => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor:
+                theme.palette.mode === "dark" ? "#222b3c" : "#e3f2fd", // Dark blue vs light blue
+              color: theme.palette.mode === "dark" ? "#ffffff" : "#1a237e", // Light text on dark, dark text on light
             },
           }}
         >
@@ -169,6 +210,9 @@ const AdminDashboardLayout = () => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor:
+                theme.palette.mode === "dark" ? "#222b3c" : "#e3f2fd", // Dark blue vs light blue
+              color: theme.palette.mode === "dark" ? "#ffffff" : "#1a237e", // Light text on dark, dark text on light
             },
           }}
           open

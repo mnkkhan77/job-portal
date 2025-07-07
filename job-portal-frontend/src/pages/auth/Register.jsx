@@ -1,20 +1,46 @@
 // src/pages/Register.jsx
 
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../utils/auth";
+
+import { register } from "../../api/auth"; // ← backend POST /auth/register
+import { saveAuth } from "../../utils/authStorage";
 
 export default function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleRegister = () => {
-    // Simulate registration & login
-    login("fake-jwt-token", { name, email });
-    navigate("/");
+  const handleRegister = async () => {
+    setError("");
+
+    try {
+      const res = await register({
+        username: name,
+        email,
+        password,
+      });
+
+      /* backend returns { token, user } */
+      const { token, user } = res.data;
+      saveAuth(token, user);
+
+      navigate("/"); // go home after sign‑up
+    } catch (err) {
+      const msg =
+        err.response?.data?.message || "Registration failed, try again.";
+      setError(msg);
+    }
   };
 
   return (
@@ -23,6 +49,11 @@ export default function Register() {
         <Typography variant="h5" gutterBottom>
           Register
         </Typography>
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
         <TextField
           label="Full Name"
           fullWidth

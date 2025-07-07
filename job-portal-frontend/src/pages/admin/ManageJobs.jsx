@@ -8,6 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  MenuItem,
   Paper,
   Table,
   TableBody,
@@ -19,7 +20,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import useManageJobs from "../../hooks/useManageJobs";
+import useManageJobs from "./../../hooks/jobs/useManageJobs";
 
 export default function ManageJobs() {
   const {
@@ -114,6 +115,7 @@ export default function ManageJobs() {
             value={form.title}
             onChange={handleChange("title")}
           />
+
           <TextField
             fullWidth
             label="Company"
@@ -121,16 +123,27 @@ export default function ManageJobs() {
             value={form.company}
             onChange={handleChange("company")}
           />
+
+          {/* ▼ NEW: location selector */}
           <TextField
+            select
             fullWidth
             label="Location"
             margin="dense"
             value={form.location}
             onChange={handleChange("location")}
-          />
+          >
+            <MenuItem value="onsite">On‑site</MenuItem>
+            <MenuItem value="remote">Remote</MenuItem>
+            <MenuItem value="hybrid">Hybrid</MenuItem>
+          </TextField>
+
+          {/* ▼ NEW: numeric years‑of‑experience field */}
           <TextField
             fullWidth
-            label="Experience"
+            type="number"
+            label="Experience (years)"
+            inputProps={{ min: 0 }}
             margin="dense"
             value={form.experience}
             onChange={handleChange("experience")}

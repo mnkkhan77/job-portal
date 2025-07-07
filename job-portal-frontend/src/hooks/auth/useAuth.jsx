@@ -1,7 +1,6 @@
 // src/hooks/useAuth.js
 import { useSyncExternalStore } from "react";
-
-const KEY = "auth"; // where we store fake-JWT + user/role
+import { clearAuth, getAuth } from "../../utils/authStorage";
 
 /* subscribe:  tell React to re-run snapshot when “storage” fires */
 const subscribe = (cb) => {
@@ -10,7 +9,7 @@ const subscribe = (cb) => {
 };
 
 /* snapshot:  *string* in localStorage (stable unless value really changes) */
-const getSnapshot = () => localStorage.getItem(KEY) || null;
+const getSnapshot = () => JSON.stringify(getAuth()) ?? null;
 
 export const useAuth = () => {
   const raw = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
@@ -20,5 +19,6 @@ export const useAuth = () => {
     isAuthenticated: !!auth?.token,
     username: auth?.user?.username,
     role: auth?.user?.role,
+    logout: clearAuth,
   };
 };

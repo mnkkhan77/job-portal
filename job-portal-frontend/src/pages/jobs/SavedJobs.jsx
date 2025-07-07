@@ -1,23 +1,15 @@
-import { Box, Container, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+// src/pages/SavedJobs.jsx
+import { Box, CircularProgress, Container, Typography } from "@mui/material";
 import { Navigate } from "react-router-dom";
-import JobCard from "../components/job/JobCard";
-import { useAuth } from "../hooks/useAuth";
-import { getSavedJobs } from "../utils/savedJobs";
+import JobCard from "../../components/job/JobCard";
+import { useAuth } from "../../hooks/auth/useAuth";
+import useSavedJobs from "./../../hooks/jobs/useSavedJobs";
 
 export default function SavedJobs() {
   const { role } = useAuth();
+  if (role === "admin") return <Navigate to="/" replace />; // 🔒 block admins
 
-  /* 🔒 block admins */
-  if (role === "admin") return <Navigate to="/" replace />;
-
-  const [jobs, setJobs] = useState(getSavedJobs());
-
-  useEffect(() => {
-    const onStorage = () => setJobs(getSavedJobs());
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
-  }, []);
+  const { savedJobs: jobs, loading } = useSavedJobs();
 
   return (
     <Container sx={{ py: 4 }}>
@@ -25,7 +17,11 @@ export default function SavedJobs() {
         Saved Jobs
       </Typography>
 
-      {jobs.length === 0 ? (
+      {loading ? (
+        <Box textAlign="center" py={4}>
+          <CircularProgress />
+        </Box>
+      ) : jobs.length === 0 ? (
         <Typography>You haven&rsquo;t saved any jobs yet.</Typography>
       ) : (
         <Box

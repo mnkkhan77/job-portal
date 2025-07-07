@@ -1,6 +1,13 @@
+// src/components/job/JobDetailsView
 import { Box, Button, Stack, Typography } from "@mui/material";
 
-export default function JobDetailsView({ job, onApply, onSave, canSave }) {
+export default function JobDetailsView({
+  job,
+  onApply,
+  onSave,
+  canSave,
+  canApply,
+}) {
   if (!job) {
     return (
       <Box textAlign="center" py={8}>
@@ -39,14 +46,21 @@ export default function JobDetailsView({ job, onApply, onSave, canSave }) {
       </Typography>
 
       <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
-        <Button
-          variant="contained"
-          color="secondary"
-          fullWidth
-          onClick={onApply}
-        >
-          Apply Now
-        </Button>
+        {canApply ? (
+          <Button
+            onClick={onApply}
+            variant="contained"
+            color="secondary"
+            fullWidth
+          >
+            Apply Now
+          </Button>
+        ) : (
+          <Button disabled variant="outlined">
+            Already Applied
+          </Button>
+        )}
+
         {canSave && (
           <Button variant="outlined" onClick={onSave}>
             Save Job

@@ -1,10 +1,10 @@
 // src/pages/JobsList.jsx
 import { Box, Button, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
-import jobsData from "../data/jobs.json";
-import useJobFilter from "../hooks/useJobFilter";
-import JobCard from "./../components/job/JobCard";
-import JobSearchBar from "./../components/job/JobSearchBar";
+import JobCard from "../../components/job/JobCard";
+import useJobs from "../../hooks/useJobs";
+import JobSearchBar from "./../../components/job/JobSearch/JobSearchBar";
+import useJobFilter from "./../../hooks/jobs/useJobFilter";
 
 /* -------- helpers -------- */
 const normalizeExperience = (exp) => {
@@ -19,6 +19,7 @@ const expSort = (a, b) => {
 };
 
 export default function JobsList() {
+  const { data: apiJobs, loading } = useJobs();
   /* ------------- filter/sort state via hook ------------- */
   const {
     query,
@@ -31,12 +32,12 @@ export default function JobsList() {
     setSortBy,
     clearFilters,
     filteredJobs, // already search + location filtered
-  } = useJobFilter(jobsData);
+  } = useJobFilter(apiJobs);
 
   /* ------------- derive distinct dropdown values ------------- */
-  const locations = [...new Set(jobsData.map((j) => j.location))].sort();
+  const locations = [...new Set(apiJobs.map((j) => j.location))].sort();
   const expOptions = [
-    ...new Set(jobsData.map((j) => normalizeExperience(j.experience))),
+    ...new Set(apiJobs.map((j) => normalizeExperience(j.experience))),
   ].sort(expSort);
 
   /* ------------- apply experience bucket after normalising ------------- */
@@ -53,6 +54,7 @@ export default function JobsList() {
   const showMore = () => setVisibleCount((prev) => prev + 6);
   const hasMore = visibleCount < finalJobs.length;
 
+  if (loading) return <Typography sx={{ m: 4 }}>Loading…</Typography>;
   return (
     <Box sx={{ px: { xs: 2, md: 4 }, py: 4 }}>
       {/* search / filter / sort bar */}

@@ -12,20 +12,20 @@ import Navbar from "./components/common/Navbar";
 
 /* ——— public pages ——— */
 import JobDetails from "./components/job/JobDetails";
-import HomePage from "./pages/HomePage";
-import JobsList from "./pages/JobsList";
-import SavedJobs from "./pages/SavedJobs";
+import HomePage from "./pages/common/HomePage";
+import JobsList from "./pages/jobs/JobsList";
+import SavedJobs from "./pages/jobs/SavedJobs";
 
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import Profile from "./pages/Profile";
+import Profile from "./pages/user/Profile";
 
+import NotFound from "./pages/common/NotFound";
 import About from "./pages/info/About";
 import Careers from "./pages/info/Careers";
 import Contact from "./pages/info/Contact";
 import Help from "./pages/info/Help";
 import Privacy from "./pages/info/Privacy";
-import NotFound from "./pages/NotFound";
 
 /* ——— admin ——— */
 import AdminRoute from "./components/common/AdminRoute";
@@ -34,8 +34,9 @@ import AdminDashboardLayout from "./pages/admin/AdminDashboardLayout";
 import AdminHome from "./pages/admin/AdminHome";
 import ManageJobs from "./pages/admin/ManageJobs";
 import ManageUsers from "./pages/admin/ManageUsers";
-import AppliedJobs from "./pages/AppliedJobs";
-import Unauthorized from "./pages/Unauthorized";
+import ChangePassword from "./pages/ChangePassword";
+import Unauthorized from "./pages/common/Unauthorized";
+import AppliedJobs from "./pages/jobs/AppliedJobs";
 
 /* ——— navbar links ——— */
 const navLinks = [
@@ -70,6 +71,7 @@ function AppShell() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/saved" element={<SavedJobs />} />
             <Route path="/applied" element={<AppliedJobs />} />
+            <Route path="/change-password" element={<ChangePassword />} />
           </Route>
 
           {/* admin-protected */}

@@ -12,12 +12,9 @@ export default function Footer() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
-  /* colors that pop on both modes */
   const bg = isDark ? theme.palette.primary.dark : theme.palette.primary.main;
   const text = isDark ? theme.palette.text.primary : theme.palette.common.white;
-  const linkCol = isDark
-    ? theme.palette.common.white
-    : theme.palette.common.white;
+  const linkCol = theme.palette.common.white;
 
   return (
     <Box
@@ -30,9 +27,14 @@ export default function Footer() {
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
+        <Grid
+          container
+          spacing={4}
+          columns={12}
+          sx={{ justifyContent: "space-evenly" }}
+        >
           {/* ----- brand ----- */}
-          <Grid xs={12} md={4}>
+          <Grid sx={{ gridColumn: { xs: "span 12", md: "span 4" } }}>
             <Typography variant="h6" sx={{ mb: 1 }}>
               JobPortal
             </Typography>
@@ -44,7 +46,7 @@ export default function Footer() {
           </Grid>
 
           {/* ----- company links ----- */}
-          <Grid xs={12} md={4}>
+          <Grid sx={{ gridColumn: { xs: "span 12", md: "span 4" } }}>
             <Typography variant="subtitle1" sx={{ mb: 1 }}>
               Company
             </Typography>
@@ -59,7 +61,7 @@ export default function Footer() {
           </Grid>
 
           {/* ----- support links ----- */}
-          <Grid xs={12} md={4}>
+          <Grid sx={{ gridColumn: { xs: "span 12", md: "span 4" } }}>
             <Typography variant="subtitle1" sx={{ mb: 1 }}>
               Support
             </Typography>

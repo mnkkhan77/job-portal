@@ -1,9 +1,9 @@
 import { useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ColorModeContext } from "../contexts/CustomThemeProvider";
-import { logout } from "../utils/auth";
-import { useAuth } from "./useAuth";
+import { logout } from "../../api/auth";
+import { ColorModeContext } from "../../contexts/CustomThemeProvider";
+import { useAuth } from "../../hooks/auth/useAuth";
 
 const useNavBarLogic = () => {
   const theme = useTheme();

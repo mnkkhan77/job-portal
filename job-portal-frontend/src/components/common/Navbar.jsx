@@ -25,7 +25,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import useNavBarLogic from "./../../hooks/useNavBarLogic";
+import useNavBarLogic from "./../../hooks/ui/useNavBarLogic";
 
 const Navbar = ({ navLinks }) => {
   const {
@@ -167,61 +167,129 @@ const Navbar = ({ navLinks }) => {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         PaperProps={{
-          sx: { backgroundColor: "primary.main", color: "secondary.main" },
+          sx: {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.text.primary,
+          },
         }}
       >
         <Box sx={{ width: 250 }} onClick={() => setDrawerOpen(false)}>
           <List>
             {navLinks.filter(canShow).map((link) => (
               <ListItem key={link.title} disablePadding>
-                <ListItem button component={RouterLink} to={link.href}>
+                <ListItem
+                  button
+                  component={RouterLink}
+                  to={link.href}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: theme.palette.action.hover,
+                    },
+                  }}
+                >
                   <ListItemText
                     primary={link.title}
-                    primaryTypographyProps={{ color: "secondary.main" }}
+                    primaryTypographyProps={{
+                      sx: { color: theme.palette.text.primary },
+                    }}
                   />
                 </ListItem>
               </ListItem>
             ))}
           </List>
 
-          <Divider sx={{ borderColor: "rgba(255,255,255,0.3)" }} />
+          <Divider sx={{ borderColor: theme.palette.divider }} />
 
           <List>
             {isAuthenticated ? (
               <>
-                <ListItem button component={RouterLink} to="/profile">
+                <ListItem
+                  button
+                  component={RouterLink}
+                  to="/profile"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: theme.palette.action.hover,
+                    },
+                  }}
+                >
                   <ListItemText
                     primary="My Profile"
-                    primaryTypographyProps={{ color: "secondary.main" }}
+                    primaryTypographyProps={{
+                      sx: { color: theme.palette.text.primary },
+                    }}
                   />
                 </ListItem>
                 {role === "admin" && (
-                  <ListItem button component={RouterLink} to="/admin">
+                  <ListItem
+                    button
+                    component={RouterLink}
+                    to="/admin"
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: theme.palette.action.hover,
+                      },
+                    }}
+                  >
                     <ListItemText
                       primary="Admin Dashboard"
-                      primaryTypographyProps={{ color: "secondary.main" }}
+                      primaryTypographyProps={{
+                        sx: { color: theme.palette.text.primary },
+                      }}
                     />
                   </ListItem>
                 )}
-                <ListItem button onClick={handleLogout}>
+                <ListItem
+                  button
+                  onClick={handleLogout}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: theme.palette.action.hover,
+                    },
+                  }}
+                >
                   <ListItemText
                     primary="Logout"
-                    primaryTypographyProps={{ color: "secondary.main" }}
+                    primaryTypographyProps={{
+                      sx: { color: theme.palette.text.primary },
+                    }}
                   />
                 </ListItem>
               </>
             ) : (
               <>
-                <ListItem button component={RouterLink} to="/login">
+                <ListItem
+                  button
+                  component={RouterLink}
+                  to="/login"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: theme.palette.action.hover,
+                    },
+                  }}
+                >
                   <ListItemText
                     primary="Login"
-                    primaryTypographyProps={{ color: "secondary.main" }}
+                    primaryTypographyProps={{
+                      sx: { color: theme.palette.text.primary },
+                    }}
                   />
                 </ListItem>
-                <ListItem button component={RouterLink} to="/register">
+                <ListItem
+                  button
+                  component={RouterLink}
+                  to="/register"
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: theme.palette.action.hover,
+                    },
+                  }}
+                >
                   <ListItemText
                     primary="Register"
-                    primaryTypographyProps={{ color: "secondary.main" }}
+                    primaryTypographyProps={{
+                      sx: { color: theme.palette.text.primary },
+                    }}
                   />
                 </ListItem>
               </>

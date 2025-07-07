@@ -1,3 +1,4 @@
+// src/pages/user/profile.jsx
 import {
   Button,
   Card,
@@ -7,7 +8,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import useProfile from "../hooks/useProfile";
+import { Link } from "react-router-dom";
+import useProfile from "./../../hooks/auth/useProfile";
 
 export default function Profile() {
   const {
@@ -59,10 +61,7 @@ export default function Profile() {
               Applied Jobs: <strong>{appliedCount}</strong>
             </Typography>
 
-            <Button
-              variant="outlined"
-              onClick={() => alert("Change-password flow TBD")}
-            >
+            <Button component={Link} to="/change-password" variant="outlined">
               Change Password
             </Button>
 

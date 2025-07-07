@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import JobCard from "../../components/job/JobCard";
+import JobCard from "../JobCard";
 
 const JobList = ({ jobs }) => {
   return (

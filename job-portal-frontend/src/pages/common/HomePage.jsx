@@ -1,5 +1,5 @@
 import { Box, CssBaseline } from "@mui/material";
-import JobsList from "./JobsList";
+import JobsList from "./../jobs/JobsList";
 
 export default function HomePage() {
   return (

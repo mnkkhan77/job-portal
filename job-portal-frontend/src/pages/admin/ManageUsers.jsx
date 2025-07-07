@@ -20,7 +20,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import useManageUsers from "../../hooks/useManageUsers";
+import useManageUsers from "./../../hooks/admin/useManageUsers";
 
 export default function ManageUsers() {
   const {
@@ -58,7 +58,7 @@ export default function ManageUsers() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
+              <TableCell>Username</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Role</TableCell>
               <TableCell align="center">Actions</TableCell>
@@ -68,7 +68,7 @@ export default function ManageUsers() {
           <TableBody>
             {visibleUsers.map((user) => (
               <TableRow key={user.id}>
-                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.username}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.role}</TableCell>
                 <TableCell align="center">
@@ -109,10 +109,10 @@ export default function ManageUsers() {
         <DialogContent>
           <TextField
             fullWidth
-            label="Name"
+            label="Username"
             margin="dense"
-            value={form.name}
-            onChange={handleChange("name")}
+            value={form.username}
+            onChange={handleChange("username")}
           />
           <TextField
             fullWidth
@@ -120,6 +120,13 @@ export default function ManageUsers() {
             margin="dense"
             value={form.email}
             onChange={handleChange("email")}
+          />
+          <TextField
+            fullWidth
+            label="Password"
+            margin="dense"
+            value={form.password}
+            onChange={handleChange("password")}
           />
           <TextField
             select
