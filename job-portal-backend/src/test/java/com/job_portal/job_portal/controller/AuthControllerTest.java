@@ -1,5 +1,6 @@
 package com.job_portal.job_portal.controller;
 
+import com.job_portal.job_portal.controller.user.AuthController;
 import com.job_portal.job_portal.dto.AuthRequest;
 import com.job_portal.job_portal.dto.AuthResponse;
 import com.job_portal.job_portal.dto.UserDto;
