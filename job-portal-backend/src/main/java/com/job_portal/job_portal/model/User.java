@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,8 +17,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "users")                      // “user” is reserved word in MySQL
-public class User {
+@Table(name = "users")           // “user” is reserved in some DBs
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +33,51 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    /**
+     * BCrypt hash – never expose
+     */
     @NotBlank
-    @JsonIgnore                // never send raw hash to client
+    @JsonIgnore
     private String password;
 
+    /**
+     * user │ admin
+     */
     @Column(nullable = false)
-    private String role = "user";        // user | admin
+    private String role = "user";
+
+    /* ───────────────────────────────
+       UserDetails implementation
+       ─────────────────────────────── */
+
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // e.g. ROLE_ADMIN / ROLE_USER
+        return List.of(() -> "ROLE_" + role.toUpperCase());
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return true;
+    }
 }

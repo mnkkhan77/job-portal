@@ -1,4 +1,4 @@
-package com.job_portal.job_portal.controller;
+package com.job_portal.job_portal.controller.user;
 
 import com.job_portal.job_portal.dto.AuthRequest;
 import com.job_portal.job_portal.dto.AuthResponse;
@@ -8,6 +8,7 @@ import com.job_portal.job_portal.security.JwtUtil;
 import com.job_portal.job_portal.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -45,6 +46,13 @@ public class AuthController {
         // double encoding cause issue
         // dto.setPassword(encoder.encode(dto.getPassword()));
         return userService.create(dto);
+    }
+
+    /* logout */
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        // In JWT-based stateless auth, just respond with success.
+        return ResponseEntity.ok("Logged out successfully");
     }
 }
 

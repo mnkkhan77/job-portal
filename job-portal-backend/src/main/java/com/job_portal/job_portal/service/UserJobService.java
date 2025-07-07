@@ -16,4 +16,6 @@ public interface UserJobService {
     void apply(Long userId, Long jobId);
 
     List<Job> listApplied(Long userId);
+
+    void delete(Long userId, Long jobId);
 }

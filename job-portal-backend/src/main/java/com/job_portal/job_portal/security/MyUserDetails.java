@@ -17,6 +17,10 @@ public class MyUserDetails implements UserDetails {
         return user.getUsername();
     }
 
+    public Long getId() {         // ➜ or getUser() { return user; }
+        return user.getId();
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();

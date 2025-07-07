@@ -1,4 +1,4 @@
-package com.job_portal.job_portal.controller;
+package com.job_portal.job_portal.controller.user;
 
 import com.job_portal.job_portal.dto.JobDto;
 import com.job_portal.job_portal.model.Job;
