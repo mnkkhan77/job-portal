@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 public interface JobService {
     Page<Job> list(Pageable pageable);
 
-    Page<JobDto> getJobs(String title, String location, String company, String experience, int page, int size, String sortBy, String sortDir);
+    Page<JobDto> getJobs(String title, String location, String company, String experience, int minSalary, int maxSalary, int page, int size, String sortBy, String sortDir);
 
     Job get(Long id);
 

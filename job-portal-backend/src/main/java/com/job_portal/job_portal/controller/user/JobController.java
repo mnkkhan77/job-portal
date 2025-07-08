@@ -22,12 +22,14 @@ public class JobController {
             @RequestParam(defaultValue = "") String location,
             @RequestParam(defaultValue = "") String company,
             @RequestParam(defaultValue = "") String experience,
+            @RequestParam(defaultValue = "0") int minSalary,
+            @RequestParam(defaultValue = "0") int maxSalary,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
     ) {
-        Page<JobDto> jobs = service.getJobs(title, location, company, experience, page, size, sortBy, sortDir);
+        Page<JobDto> jobs = service.getJobs(title, location, company, experience, minSalary, maxSalary, page, size, sortBy, sortDir);
         return ResponseEntity.ok(jobs);
     }
 

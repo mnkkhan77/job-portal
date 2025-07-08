@@ -14,6 +14,8 @@ public class JobDto {
     private String company;
     private String location;
     private String experience;
+    private Integer minSalary;
+    private Integer maxSalary;
 
     public static JobDto from(Job job) {
         return JobDto.builder()
@@ -22,6 +24,8 @@ public class JobDto {
                 .company(job.getCompany())
                 .location(job.getLocation())
                 .experience(job.getExperience())
+                .minSalary(job.getMinSalary())
+                .maxSalary(job.getMaxSalary())
                 .build();
     }
 }

@@ -34,7 +34,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Page<JobDto> getJobs(String title, String location, String company, String experience, int page, int size, String sortBy, String sortDir) {
+    public Page<JobDto> getJobs(String title, String location, String company, String experience, int minSalary, int maxSalary, int page, int size, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
