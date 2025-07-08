@@ -14,12 +14,21 @@ import { Link as RouterLink } from "react-router-dom";
 /**
  * Pure presentational job card.
  * Props:
- *  - job        { id,title,company,experience,location,salary }
+ *  - job        { id,title,company,experience,location,minSalary, maxSalary }
  *  - saved      boolean
  *  - canSave    boolean  (show bookmark if true)
  *  - onToggle   function () => void
  */
 export default function JobCardView({ job, saved, canSave, onToggle }) {
+  const formatSalary = (salary) => {
+    if (salary >= 100000) {
+      return `₹ ${(salary / 100000).toFixed(2)} LPA`;
+    } else if (salary >= 1000) {
+      return `₹ ${(salary / 1000).toFixed(0)} TPA`;
+    } else {
+      return `₹ ${salary}`;
+    }
+  };
   return (
     <Card
       sx={{
@@ -68,7 +77,8 @@ export default function JobCardView({ job, saved, canSave, onToggle }) {
             <strong>Location:</strong> {job.location}
           </Typography>
           <Typography variant="body2">
-            <strong>Salary:</strong> {job.salary}
+            <strong>Salary:</strong> {formatSalary(job.minSalary)} -{" "}
+            {formatSalary(job.maxSalary)}
           </Typography>
         </Box>
       </CardContent>
