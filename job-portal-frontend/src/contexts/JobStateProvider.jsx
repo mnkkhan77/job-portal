@@ -2,18 +2,20 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { listAppliedJobs } from "../api/jobs/applied";
 import { listSavedJobs } from "../api/jobs/saved";
+import { useAuth } from "../hooks/auth/useAuth";
 
 const JobStateContext = createContext();
 
 export function JobStateProvider({ children }) {
-  const fetchedRef = useRef(false); // 👈 guard
+  const { isAuthenticated } = useAuth();
+  const fetchedRef = useRef(false);
   const [savedJobs, setSavedJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchAll = async () => {
-    if (fetchedRef.current) return; // already fetched – skip
-    fetchedRef.current = true; // mark as fetched
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
     try {
       const [savedRes, appliedRes] = await Promise.all([
         listSavedJobs(),
@@ -28,12 +30,14 @@ export function JobStateProvider({ children }) {
     }
   };
 
-  /* one‑time fetch even under StrictMode */
   useEffect(() => {
-    fetchAll();
-  }, []);
+    if (isAuthenticated) {
+      fetchAll();
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated]);
 
-  /* …rest unchanged… */
   return (
     <JobStateContext.Provider
       value={{

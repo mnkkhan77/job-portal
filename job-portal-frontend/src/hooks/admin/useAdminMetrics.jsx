@@ -2,11 +2,8 @@
 import { useEffect, useState } from "react";
 import { getAdminMetrics } from "../../api/users/admin";
 
-/* ─────────────────────────
-   Module‑level cache
-   ───────────────────────── */
 let cachedMetrics = null; // { jobCount, userCount }
-let inFlight = null; // Promise to avoid race duplicates
+let inFlight = null;
 
 export default function useAdminMetrics() {
   const [metrics, setMetrics] = useState(
@@ -15,13 +12,12 @@ export default function useAdminMetrics() {
   const [loading, setLoading] = useState(!cachedMetrics);
 
   useEffect(() => {
-    if (cachedMetrics) return; // ✅ already cached → no fetch
+    if (cachedMetrics) return;
 
-    // If another component is already fetching, reuse that promise
     if (!inFlight) {
       inFlight = getAdminMetrics()
         .then((data) => {
-          cachedMetrics = data; // cache for future hooks
+          cachedMetrics = data;
           return data;
         })
         .catch((err) => {
@@ -29,7 +25,7 @@ export default function useAdminMetrics() {
           throw err;
         })
         .finally(() => {
-          inFlight = null; // clear “in‑flight” slot
+          inFlight = null;
         });
     }
 
