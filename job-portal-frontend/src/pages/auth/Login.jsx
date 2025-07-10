@@ -10,12 +10,12 @@ import {
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { login as loginApi } from "../../api/auth"; // ← backend POST /auth/login
-import { saveAuth } from "../../utils/authStorage"; // ← stores {token,user}
+import { login as loginApi } from "../../api/auth";
+import { saveAuth } from "../../utils/authStorage";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { state } = useLocation(); // to redirect back if needed
+  const { state } = useLocation();
   const from = state?.from?.pathname || "/profile";
 
   const [username, setUsername] = useState("");
@@ -33,11 +33,16 @@ export default function Login() {
 
     try {
       const { data } = await loginApi({ username, password });
-      // console.log("login response", data);
       const { token, user } = data;
 
       saveAuth(token, user);
-      navigate(from, { replace: true });
+      if (user.role === "recruiter") {
+        navigate("/recruiter/jobs", { replace: true });
+      } else if (user.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
     } catch (err) {
       const msg =
         err.response?.data?.message ||
