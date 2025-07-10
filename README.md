@@ -72,10 +72,6 @@ Built to be **scalable**, **secure**, and **cloud-ready**, this project can serv
 
 ## 📷 Screenshots
 
-> 📌 Add screenshots in `/assets/screenshots` and link here:
-
-| Home Page | Job Details | Admin Dashboard |
-|-----------|-------------|-----------------|
 ![image](https://github.com/user-attachments/assets/1402cb2d-586d-49ec-988e-b357e351d963)
 ![image](https://github.com/user-attachments/assets/e0a6dbf7-f145-4b3b-8181-bd7ca365cfe5)
 ![image](https://github.com/user-attachments/assets/2edc63fb-279f-4e54-b442-d04bc19c0096)
