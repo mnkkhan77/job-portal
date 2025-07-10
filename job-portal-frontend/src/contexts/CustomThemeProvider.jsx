@@ -33,14 +33,14 @@ export default function CustomThemeProvider({ children }) {
         palette: {
           mode,
           primary: {
-            main: "#6C63FF", // bold purple
+            main: "#3A5A40",
           },
           secondary: {
-            main: "#FF6584", // pink highlight
+            main: "#FF6584",
           },
           background: {
             default: mode === "light" ? "#f3f4f6" : "#1e1e2f",
-            paper: mode === "light" ? "#ffffff" : "#2c2c40",
+            paper: mode === "light" ? "#588157" : "#2c2c40",
           },
           text: {
             primary: mode === "light" ? "#1a1a1a" : "#f3f3f3",

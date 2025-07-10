@@ -23,6 +23,7 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import useNavBarLogic from "./../../hooks/ui/useNavBarLogic";
@@ -44,6 +45,9 @@ const Navbar = ({ navLinks }) => {
     setDrawerOpen,
     navigate,
   } = useNavBarLogic();
+
+  const theme1 = useTheme();
+  console.log("Theme primary color:", theme1.palette.primary.main);
 
   return (
     <>

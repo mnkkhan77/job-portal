@@ -10,11 +10,24 @@ import {
 
 export default function Footer() {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
 
-  const bg = isDark ? theme.palette.primary.dark : theme.palette.primary.main;
-  const text = isDark ? theme.palette.text.primary : theme.palette.common.white;
-  const linkCol = theme.palette.common.white;
+  const footerSections = [
+    {
+      label: "Company",
+      links: [
+        { label: "About Us", href: "/about" },
+        { label: "Careers", href: "/careers" },
+      ],
+    },
+    {
+      label: "Support",
+      links: [
+        { label: "Help Center", href: "/help" },
+        { label: "Contact Us", href: "/contact" },
+        { label: "Privacy Policy", href: "/privacy" },
+      ],
+    },
+  ];
 
   return (
     <Box
@@ -22,61 +35,50 @@ export default function Footer() {
       sx={{
         mt: "auto",
         py: 5,
-        backgroundColor: bg,
-        color: text,
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
       }}
     >
       <Container maxWidth="lg">
-        <Grid
-          container
-          spacing={4}
-          columns={12}
-          sx={{ justifyContent: "space-evenly" }}
-        >
-          {/* ----- brand ----- */}
-          <Grid sx={{ gridColumn: { xs: "span 12", md: "span 4" } }}>
+        <Grid container spacing={4} sx={{ justifyContent: "space-evenly" }}>
+          {/* Brand section */}
+          <Grid item xs={12} md={4}>
             <Typography variant="h6" sx={{ mb: 1 }}>
               JobPortal
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" fontWeight={"bold"}>
               © {new Date().getFullYear()} JobPortal Inc.
               <br />
               All rights reserved.
             </Typography>
           </Grid>
 
-          {/* ----- company links ----- */}
-          <Grid sx={{ gridColumn: { xs: "span 12", md: "span 4" } }}>
-            <Typography variant="subtitle1" sx={{ mb: 1 }}>
-              Company
-            </Typography>
-            <Stack spacing={0.5}>
-              <Link underline="hover" href="/about" sx={{ color: linkCol }}>
-                About Us
-              </Link>
-              <Link underline="hover" href="/careers" sx={{ color: linkCol }}>
-                Careers
-              </Link>
-            </Stack>
-          </Grid>
-
-          {/* ----- support links ----- */}
-          <Grid sx={{ gridColumn: { xs: "span 12", md: "span 4" } }}>
-            <Typography variant="subtitle1" sx={{ mb: 1 }}>
-              Support
-            </Typography>
-            <Stack spacing={0.5}>
-              <Link underline="hover" href="/help" sx={{ color: linkCol }}>
-                Help Center
-              </Link>
-              <Link underline="hover" href="/contact" sx={{ color: linkCol }}>
-                Contact&nbsp;Us
-              </Link>
-              <Link underline="hover" href="/privacy" sx={{ color: linkCol }}>
-                Privacy Policy
-              </Link>
-            </Stack>
-          </Grid>
+          {/* Dynamic footer sections */}
+          {footerSections.map(({ title, links }) => (
+            <Grid item xs={12} md={4} key={title}>
+              <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                {title}
+              </Typography>
+              <Stack spacing={0.5}>
+                {links.map(({ label, href }) => (
+                  <Link
+                    key={label}
+                    underline="hover"
+                    href={href}
+                    sx={{
+                      fontWeight: "bold",
+                      color: theme.palette.text.primary, // better for dark/light
+                      "&:hover": {
+                        color: theme.palette.text.primary,
+                      },
+                    }}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </Stack>
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </Box>
