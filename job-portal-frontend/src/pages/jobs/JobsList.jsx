@@ -1,26 +1,50 @@
 // src/pages/JobsList.jsx
 import { Box, Button, Typography } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import JobCard from "../../components/job/JobCard";
+import JobSearchBar from "../../components/job/JobSearch/JobSearchBar";
+import useJobFilter from "../../hooks/jobs/useJobFilter";
 import useJobs from "../../hooks/useJobs";
-import JobSearchBar from "./../../components/job/JobSearch/JobSearchBar";
-import useJobFilter from "./../../hooks/jobs/useJobFilter";
 
-/* -------- helpers -------- */
-const normalizeExperience = (exp) => {
-  const m = exp.match(/^(\d+)/);
-  return m ? `${m[1]}+ years` : exp;
-};
-
-/* sort numeric (Fresher gets 0) */
 const expSort = (a, b) => {
-  const num = (s) => (s.toLowerCase().includes("fresh") ? 0 : parseInt(s));
+  const num = (s) =>
+    typeof s === "string" && s.toLowerCase().includes("fresh")
+      ? 0
+      : parseInt(s, 10) || 0;
   return num(a) - num(b);
 };
 
 export default function JobsList() {
-  const { data: apiJobs, loading } = useJobs();
-  /* ------------- filter/sort state via hook ------------- */
+  const [page, setPage] = useState(0);
+  const pageSize = 10;
+
+  const filters = useMemo(() => ({}), []);
+
+  // Fetch jobs for current page
+  const {
+    data: apiJobs,
+    loading,
+    last,
+    totalElements,
+  } = useJobs({ filters, page, size: pageSize });
+
+  // Local state to accumulate all loaded jobs across pages
+  const [allJobs, setAllJobs] = useState([]);
+
+  // Append newly fetched jobs to allJobs state
+  useEffect(() => {
+    if (apiJobs && apiJobs.length > 0) {
+      setAllJobs((prev) => {
+        const existingIds = new Set(prev.map((j) => j.id));
+        const newJobs = apiJobs.filter((j) => !existingIds.has(j.id));
+        return [...prev, ...newJobs];
+      });
+    }
+  }, [apiJobs]);
+
+  const showLoadMore = totalElements == null || allJobs.length < totalElements;
+
+  // Pass accumulated jobs to filter hook
   const {
     query,
     location,
@@ -31,33 +55,24 @@ export default function JobsList() {
     setExp,
     setSortBy,
     clearFilters,
-    filteredJobs, // already search + location filtered
-  } = useJobFilter(apiJobs);
+    filteredJobs,
+  } = useJobFilter(allJobs);
 
-  /* ------------- derive distinct dropdown values ------------- */
-  const locations = [...new Set(apiJobs.map((j) => j.location))].sort();
-  const expOptions = [
-    ...new Set(apiJobs.map((j) => normalizeExperience(j.experience))),
-  ].sort(expSort);
+  const locations = [...new Set(filteredJobs.map((j) => j.location))].sort();
+  const expOptions = [...new Set(filteredJobs.map((j) => j.experience))].sort(
+    expSort
+  );
 
-  /* ------------- apply experience bucket after normalising ------------- */
   const finalJobs = useMemo(() => {
     if (experience === "all") return filteredJobs;
-
-    return filteredJobs.filter(
-      (j) => normalizeExperience(j.experience) === experience
-    );
+    return filteredJobs.filter((j) => j.experience === experience);
   }, [filteredJobs, experience]);
 
-  /* ------------- show-more pagination ------------- */
-  const [visibleCount, setVisibleCount] = useState(6);
-  const showMore = () => setVisibleCount((prev) => prev + 6);
-  const hasMore = visibleCount < finalJobs.length;
+  // Load more handler increments page number
+  const loadMore = () => setPage((prev) => prev + 1);
 
-  if (loading) return <Typography sx={{ m: 4 }}>Loading…</Typography>;
   return (
     <Box sx={{ px: { xs: 2, md: 4 }, py: 4 }}>
-      {/* search / filter / sort bar */}
       <JobSearchBar
         query={query}
         location={location}
@@ -72,22 +87,20 @@ export default function JobsList() {
         expOptions={expOptions}
       />
 
-      {/* job grid */}
       <Box display="flex" flexWrap="wrap" gap={2} justifyContent="center">
-        {finalJobs.length === 0 ? (
+        {loading && page === 0 ? (
+          <Typography sx={{ m: 4 }}>Loading…</Typography>
+        ) : finalJobs.length === 0 ? (
           <Typography variant="h6">No jobs found.</Typography>
         ) : (
-          finalJobs
-            .slice(0, visibleCount)
-            .map((job) => <JobCard key={job.id} job={job} />)
+          finalJobs.map((job) => <JobCard key={job.id} job={job} />)
         )}
       </Box>
 
-      {/* Show More button */}
-      {hasMore && (
+      {showLoadMore && (
         <Box textAlign="center" mt={4}>
-          <Button variant="outlined" onClick={showMore}>
-            Show More
+          <Button variant="outlined" onClick={loadMore} disabled={loading}>
+            {loading ? "Loading..." : "Load More"}
           </Button>
         </Box>
       )}
