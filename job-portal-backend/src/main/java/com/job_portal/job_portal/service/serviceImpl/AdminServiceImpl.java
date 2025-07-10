@@ -1,5 +1,7 @@
 package com.job_portal.job_portal.service.serviceImpl;
 
+import com.job_portal.job_portal.dto.JobCreateDto;
+import com.job_portal.job_portal.dto.JobDto;
 import com.job_portal.job_portal.dto.UserDto;
 import com.job_portal.job_portal.exception.ResourceNotFoundException;
 import com.job_portal.job_portal.model.Job;
@@ -23,8 +25,13 @@ public class AdminServiceImpl implements AdminService {
 
     /* ───────────── JOBS ───────────── */
 
-    @Override
-    public List<Job> listJobs() { return jobRepo.findAll(); }
+    public List<JobDto> listJobs() {
+        return jobRepo.findAll()
+                .stream()
+                .map(JobDto::from)
+                .toList();
+    }
+
 
     @Override
     public Job getJob(Long id) {
@@ -33,18 +40,41 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Job createJob(Job j) { return jobRepo.save(j); }
+    public Job createJob(JobCreateDto dto, User poster) {
+        Job job = new Job();
+        job.setTitle(dto.title());
+        job.setCompany(dto.company());
+        job.setLocation(dto.location());
+        job.setExperience(dto.experience());
+        job.setMinSalary(dto.minSalary());
+        job.setMaxSalary(dto.maxSalary());
+        job.setDescription(dto.description());
+        job.setPostedBy(poster);
 
-    @Override
-    public Job updateJob(Long id, Job j) {
-        if (!jobRepo.existsById(id))
-            throw new ResourceNotFoundException("Job " + id + " not found");
-        j.setId(id);
-        return jobRepo.save(j);
+        return jobRepo.save(job);
     }
 
     @Override
-    public void deleteJob(Long id) { jobRepo.deleteById(id); }
+    public Job updateJob(Long id, JobCreateDto dto, User requester) {
+        Job job = jobRepo.findById(id).orElseThrow();
+
+        job.setTitle(dto.title());
+        job.setCompany(dto.company());
+        job.setLocation(dto.location());
+        job.setExperience(dto.experience());
+        job.setMinSalary(dto.minSalary());
+        job.setMaxSalary(dto.maxSalary());
+        job.setDescription(dto.description());
+
+        return jobRepo.save(job);
+    }
+
+    @Override
+    public void deleteJob(Long id, User requester) {
+        Job job = jobRepo.findById(id).orElseThrow();
+        jobRepo.delete(job);
+    }
+
 
     /* ───────────── USERS ───────────── */
 
@@ -81,6 +111,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteUser(Long id) { userRepo.deleteById(id); }
+    public void deleteUser(Long id) {
+        userRepo.deleteById(id);
+    }
 }
 
