@@ -42,7 +42,7 @@ export default function AppliedJobs() {
       {loading ? (
         <Typography>Loading...</Typography>
       ) : jobs.length === 0 ? (
-        <Typography>You haven&rsquo;t applied to any jobs yet.</Typography>
+        <Typography>You haven't applied to any jobs yet.</Typography>
       ) : (
         <Box
           display="flex"
