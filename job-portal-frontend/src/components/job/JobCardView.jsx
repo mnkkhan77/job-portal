@@ -71,14 +71,18 @@ export default function JobCardView({ job, saved, canSave, onToggle }) {
             <strong>Company:</strong> {job.company}
           </Typography>
           <Typography variant="body2">
-            <strong>Experience:</strong> {job.experience}
+            <strong>Experience:</strong> {job.experience}+ Years
           </Typography>
           <Typography variant="body2">
             <strong>Location:</strong> {job.location}
           </Typography>
           <Typography variant="body2">
-            <strong>Salary:</strong> {formatSalary(job.minSalary)} -{" "}
-            {formatSalary(job.maxSalary)}
+            <strong>Salary:</strong>{" "}
+            {job.minSalary && job.maxSalary
+              ? `${formatSalary(job.minSalary)} - ${formatSalary(
+                  job.maxSalary
+                )}`
+              : "N/A"}
           </Typography>
         </Box>
       </CardContent>
