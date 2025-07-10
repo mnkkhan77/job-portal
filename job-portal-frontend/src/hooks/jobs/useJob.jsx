@@ -1,6 +1,6 @@
 // hooks/useJobs.js
 import { useEffect, useState } from "react";
-import { listJobs } from "../../api/jobs/index"; // Your modified API function
+import { listJobs } from "../../api/jobs/index";
 
 export default function useJobs({ filters = {}, page = 0, size = 10 }) {
   const [data, setData] = useState([]);
@@ -10,12 +10,11 @@ export default function useJobs({ filters = {}, page = 0, size = 10 }) {
   useEffect(() => {
     setLoading(true);
 
-    // Make the API call with page, size, and filters
     listJobs({ ...filters, page, size })
       .then((res) => {
-        const jobs = res.data.content || []; // assuming 'content' holds the job data
+        const jobs = res.data.content || [];
         setData(jobs);
-        setHasMore(!res.data.last); // `last: false` indicates more pages
+        setHasMore(!res.data.last);
       })
       .catch(() => setData([]))
       .finally(() => setLoading(false));

@@ -4,7 +4,7 @@ import { useJobState } from "../../contexts/JobStateProvider";
 import { useAuth } from "../auth/useAuth";
 
 export const useJobActions = (job) => {
-  const { isAuthenticated, role } = useAuth();
+  const { isAuthenticated, role, username } = useAuth();
   const { appliedJobs, savedJobs, refreshApplied, refreshSaved } =
     useJobState();
 
@@ -13,6 +13,9 @@ export const useJobActions = (job) => {
 
   const isSaved = savedJobs.some((j) => j.id === job?.id);
   const isApplied = appliedJobs.some((j) => j.id === job?.id);
+
+  // Check if recruiter is the one who posted the job
+  const isOwner = role === "recruiter" && job?.postedBy === username;
 
   const requireAuth = () => {
     if (!isAuthenticated) {
@@ -26,9 +29,10 @@ export const useJobActions = (job) => {
     if (!requireAuth()) return;
     try {
       await apiApply(job.id);
-      setIsApplied(true);
+      await refreshApplied();
       alert("Applied successfully!");
-    } catch {
+    } catch (err) {
+      console.error("Error in handleApply:", err);
       alert("Failed to apply.");
     }
   };
@@ -48,7 +52,7 @@ export const useJobActions = (job) => {
     handleApply,
     handleSave,
     isSaved,
-    canApply: !isApplied && role !== "admin",
-    canSave: role !== "admin",
+    canApply: !isApplied && role !== "admin" && !isOwner,
+    canSave: role !== "admin" && !isOwner,
   };
 };

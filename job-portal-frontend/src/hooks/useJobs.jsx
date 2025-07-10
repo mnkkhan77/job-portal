@@ -1,10 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { listJobs } from "../api/jobs";
 
 export default function useJobs(filters = {}) {
-  const key = JSON.stringify(filters);
+  const key = useMemo(() => JSON.stringify(filters), [filters]);
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({
+    content: [],
+    last: false,
+    totalElements: 0,
+    totalPages: 0,
+    number: 0,
+    size: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,18 +21,33 @@ export default function useJobs(filters = {}) {
 
     listJobs(filters)
       .then((res) => {
-        const jobs = res.data.content ?? res.data;
-        setData(jobs);
+        // Assuming res.data has the pagination structure:
+        // { content: [...], last, totalElements, totalPages, number, size }
+        setData(res.data);
       })
       .catch((err) => {
         console.error(err);
         setError(err);
-        setData([]);
+        setData({
+          content: [],
+          last: false,
+          totalElements: 0,
+          totalPages: 0,
+          number: 0,
+          size: 0,
+        });
       })
       .finally(() => {
         setLoading(false);
       });
   }, [key]);
 
-  return { data, loading, error };
+  return {
+    data: data.content,
+    loading,
+    error,
+    last: data.last,
+    totalElements: data.totalElements,
+    pageNumber: data.number,
+  };
 }
