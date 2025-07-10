@@ -1,5 +1,11 @@
 // src/components/job/JobDetailsView
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 export default function JobDetailsView({
   job,
@@ -7,6 +13,8 @@ export default function JobDetailsView({
   onSave,
   canSave,
   canApply,
+  loadingApplied,
+  role,
 }) {
   if (!job) {
     return (
@@ -32,10 +40,10 @@ export default function JobDetailsView({
         {job.company} — {job.location}
       </Typography>
       <Typography variant="body1" gutterBottom>
-        Salary: {job.salary}
+        Salary: {job.minSalary} - {job.maxSalary}
       </Typography>
       <Typography variant="body1" gutterBottom>
-        Experience Required: {job.experience}
+        Experience Required: {job.experience}+ Years
       </Typography>
       <Typography
         variant="body2"
@@ -45,28 +53,32 @@ export default function JobDetailsView({
         {job.description}
       </Typography>
 
-      <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
-        {canApply ? (
-          <Button
-            onClick={onApply}
-            variant="contained"
-            color="secondary"
-            fullWidth
-          >
-            Apply Now
-          </Button>
-        ) : (
-          <Button disabled variant="outlined">
-            Already Applied
-          </Button>
-        )}
+      {role !== "admin" && (
+        <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
+          {loadingApplied ? (
+            <CircularProgress size={24} />
+          ) : canApply ? (
+            <Button
+              onClick={onApply}
+              variant="contained"
+              color="secondary"
+              fullWidth
+            >
+              Apply Now
+            </Button>
+          ) : (
+            <Button disabled variant="outlined" fullWidth>
+              Already Applied
+            </Button>
+          )}
 
-        {canSave && (
-          <Button variant="outlined" onClick={onSave}>
-            Save Job
-          </Button>
-        )}
-      </Stack>
+          {canSave && (
+            <Button variant="outlined" onClick={onSave}>
+              Save Job
+            </Button>
+          )}
+        </Stack>
+      )}
     </Box>
   );
 }
