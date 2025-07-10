@@ -62,7 +62,7 @@ export default function JobDetailsView({
         {job.description}
       </Typography>
 
-      {role !== "admin" && (
+      {role !== "admin" && role !== "recruiter" && (
         <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
           {loadingApplied ? (
             <CircularProgress size={24} />
