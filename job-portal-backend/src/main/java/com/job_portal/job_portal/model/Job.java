@@ -21,7 +21,7 @@ public class Job {
     @Column(nullable = false)
     private String location;
     @Column(nullable = false)
-    private String experience;   // e.g. "2+ years"
+    private Integer experience;
     @Column(nullable = false)
     private Integer minSalary;
     @Column(nullable = false)
@@ -29,4 +29,9 @@ public class Job {
 
     @Lob
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "posted_by")
+    private User postedBy;
+
 }

@@ -34,8 +34,8 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public Job get(@PathVariable Long id) {
-        return service.get(id);
+    public JobDto get(@PathVariable Long id) {
+        return JobDto.from(service.get(id));
     }
 
     @PostMapping

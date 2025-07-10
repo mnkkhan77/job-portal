@@ -3,6 +3,7 @@ package com.job_portal.job_portal.controller.user;
 import com.job_portal.job_portal.dto.JobBriefDto;
 import com.job_portal.job_portal.dto.UserDto;
 import com.job_portal.job_portal.dto.UserUpdateDto;
+import com.job_portal.job_portal.model.User;
 import com.job_portal.job_portal.security.MyUserDetails;
 import com.job_portal.job_portal.service.UserJobService;
 import com.job_portal.job_portal.service.UserService;
@@ -71,9 +72,10 @@ public class UserJobController {
      * GET /api/users/saved → List saved jobs
      */
     @GetMapping("/saved")
-    public List<JobBriefDto> listSaved(Authentication auth) {
-        MyUserDetails principal = (MyUserDetails) auth.getPrincipal();
-        return svc.listSaved(principal.getId())
+    public List<JobBriefDto> listSaved(
+            @AuthenticationPrincipal(expression = "user") User user
+    ) {
+        return svc.listSaved(user.getId())
                 .stream()
                 .map(JobBriefDto::from)
                 .toList();
@@ -95,9 +97,10 @@ public class UserJobController {
      * GET /api/users/applied → List applied jobs
      */
     @GetMapping("/applied")
-    public List<JobBriefDto> listApplied(Authentication auth) {
-        MyUserDetails principal = (MyUserDetails) auth.getPrincipal();
-        return svc.listApplied(principal.getId())
+    public List<JobBriefDto> listApplied(
+            @AuthenticationPrincipal(expression = "user") User user   // ⬅️ same here
+    ) {
+        return svc.listApplied(user.getId())
                 .stream()
                 .map(JobBriefDto::from)
                 .toList();
