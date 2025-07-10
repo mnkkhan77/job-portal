@@ -9,7 +9,7 @@ import JobDetailsView from "./JobDetailsView";
 
 export default function JobDetails() {
   const { id } = useParams();
-  const { job, loading } = useJob(id);
+  const { data: job, loading } = useJob(id);
   const navigate = useNavigate();
 
   const { role } = useAuth();

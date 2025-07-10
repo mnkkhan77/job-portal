@@ -30,6 +30,15 @@ export default function JobDetailsView({
       </Box>
     );
   }
+  const formatSalary = (salary) => {
+    if (salary >= 100000) {
+      return `₹ ${(salary / 100000).toFixed(2)} LPA`;
+    } else if (salary >= 1000) {
+      return `₹ ${(salary / 1000).toFixed(0)} TPA`;
+    } else {
+      return `₹ ${salary}`;
+    }
+  };
 
   return (
     <Box sx={{ py: 6, px: { xs: 2, sm: 4, md: 8 }, maxWidth: 800, mx: "auto" }}>
@@ -40,7 +49,7 @@ export default function JobDetailsView({
         {job.company} — {job.location}
       </Typography>
       <Typography variant="body1" gutterBottom>
-        Salary: {job.minSalary} - {job.maxSalary}
+        Salary: {formatSalary(job.minSalary)} - {formatSalary(job.maxSalary)}
       </Typography>
       <Typography variant="body1" gutterBottom>
         Experience Required: {job.experience}+ Years
