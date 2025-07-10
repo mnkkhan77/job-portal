@@ -48,26 +48,34 @@ const AdminDashboardLayout = () => {
     navigate("/login");
   };
 
-  const getItemStyles = (path) => ({
-    borderRadius: 1,
-    mx: 1,
-    my: 0.5,
-    backgroundColor:
-      location.pathname === path
-        ? theme.palette.mode === "dark"
-          ? "#0d47a1"
-          : "#bbdefb"
-        : "transparent",
-    color:
-      location.pathname === path
-        ? theme.palette.mode === "dark"
-          ? "#fff"
-          : "#0d47a1"
-        : "inherit",
-    "&:hover": {
-      backgroundColor: theme.palette.mode === "dark" ? "#1565c0" : "#e3f2fd",
-    },
-  });
+  const getItemStyles = (path) => {
+    const isActive = location.pathname === path;
+
+    return {
+      borderRadius: 1,
+      mx: 1,
+      my: 0.5,
+      backgroundColor: isActive ? theme.palette.action.selected : "transparent",
+      color: isActive
+        ? theme.palette.text.primary
+        : theme.palette.text.secondary,
+      "&:hover": {
+        backgroundColor: theme.palette.action.hover,
+      },
+    };
+  };
+
+  // Sidebar items defined as an array
+  const sidebarItems = [
+    { label: "Dashboard", path: "/admin" },
+    { label: "Manage Jobs", path: "/admin/jobs" },
+    { label: "Manage Users", path: "/admin/users" },
+  ];
+
+  const listItemTextStyle = {
+    fontWeight: "bold",
+    color: theme.palette.text.primary,
+  };
 
   const drawer = (
     <Box>
@@ -76,7 +84,7 @@ const AdminDashboardLayout = () => {
         sx={{
           p: 2,
           fontWeight: "bold",
-          color: theme.palette.mode === "dark" ? "#90caf9" : "#0d47a1",
+          color: theme.palette.text.primary,
         }}
       >
         Admin Panel
@@ -84,32 +92,22 @@ const AdminDashboardLayout = () => {
 
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton
-            onClick={() => navigate("/admin")}
-            sx={getItemStyles("/admin")}
-          >
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem disablePadding>
-          <ListItemButton
-            onClick={() => navigate("/admin/jobs")}
-            sx={getItemStyles("/admin/jobs")}
-          >
-            <ListItemText primary="Manage Jobs" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem disablePadding>
-          <ListItemButton
-            onClick={() => navigate("/admin/users")}
-            sx={getItemStyles("/admin/users")}
-          >
-            <ListItemText primary="Manage Users" />
-          </ListItemButton>
-        </ListItem>
+        {sidebarItems.map(({ label, path }) => (
+          <ListItem disablePadding key={path}>
+            <ListItemButton
+              onClick={() => navigate(path)}
+              sx={getItemStyles(path)}
+            >
+              <ListItemText
+                primary={label}
+                primaryTypographyProps={{
+                  fontWeight: "bold",
+                  color: theme.palette.text.primary,
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
@@ -193,16 +191,15 @@ const AdminDashboardLayout = () => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              backgroundColor:
-                theme.palette.mode === "dark" ? "#222b3c" : "#e3f2fd", // Dark blue vs light blue
-              color: theme.palette.mode === "dark" ? "#ffffff" : "#1a237e", // Light text on dark, dark text on light
+              bgcolor: theme.palette.background.paper,
+              color: theme.palette.text.primary,
             },
           }}
         >
           {drawer}
         </Drawer>
 
-        {/* Permanent sidebar */}
+        {/* Permanent drawer */}
         <Drawer
           variant="permanent"
           sx={{
@@ -210,9 +207,8 @@ const AdminDashboardLayout = () => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              backgroundColor:
-                theme.palette.mode === "dark" ? "#222b3c" : "#e3f2fd", // Dark blue vs light blue
-              color: theme.palette.mode === "dark" ? "#ffffff" : "#1a237e", // Light text on dark, dark text on light
+              bgcolor: theme.palette.background.paper,
+              color: theme.palette.text.primary,
             },
           }}
           open
@@ -227,7 +223,7 @@ const AdminDashboardLayout = () => {
         sx={{
           flexGrow: 1,
           p: 3,
-          mt: 8, // space for AppBar
+          mt: 8,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >

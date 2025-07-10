@@ -3,6 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -91,7 +92,8 @@ export default function RecruiterJobs() {
             {loading ? (
               <TableRow>
                 <TableCell colSpan={5} align="center">
-                  Loading...
+                  {/* Loading... */}
+                  <CircularProgress />
                 </TableCell>
               </TableRow>
             ) : jobs.length === 0 ? (

@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   Container,
   Stack,
   TextField,
@@ -21,7 +22,9 @@ export default function RecruiterProfile() {
     handleGoToJobs,
   } = useRecruiterProfile();
 
-  if (loading) return <Typography>Loading...</Typography>;
+  if (loading) return;
+  // <Typography>Loading...</Typography>
+  <CircularProgress />;
 
   return (
     <Container sx={{ py: 6 }}>

@@ -1,5 +1,5 @@
 // src/pages/JobsList.jsx
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import JobCard from "../../components/job/JobCard";
 import JobSearchBar from "../../components/job/JobSearch/JobSearchBar";
@@ -89,7 +89,8 @@ export default function JobsList() {
 
       <Box display="flex" flexWrap="wrap" gap={2} justifyContent="center">
         {loading && page === 0 ? (
-          <Typography sx={{ m: 4 }}>Loading…</Typography>
+          // <Typography sx={{ m: 4 }}>Loading…</Typography>
+          <CircularProgress />
         ) : finalJobs.length === 0 ? (
           <Typography variant="h6">No jobs found.</Typography>
         ) : (
@@ -100,7 +101,12 @@ export default function JobsList() {
       {showLoadMore && (
         <Box textAlign="center" mt={4}>
           <Button variant="outlined" onClick={loadMore} disabled={loading}>
-            {loading ? "Loading..." : "Load More"}
+            {loading ? (
+              // "Loading..."
+              <CircularProgress />
+            ) : (
+              "Load More"
+            )}
           </Button>
         </Box>
       )}

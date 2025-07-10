@@ -1,5 +1,11 @@
 // src/pages/jobs/AppliedJobs.jsx
-import { Box, Button, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { listAppliedJobs, removeApplied } from "../../api/jobs/applied";
 import JobCard from "../../components/job/JobCard";
@@ -40,7 +46,8 @@ export default function AppliedJobs() {
       </Typography>
 
       {loading ? (
-        <Typography>Loading...</Typography>
+        // <Typography>Loading...</Typography>
+        <CircularProgress />
       ) : jobs.length === 0 ? (
         <Typography>You haven't applied to any jobs yet.</Typography>
       ) : (
