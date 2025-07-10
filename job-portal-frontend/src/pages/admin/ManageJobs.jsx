@@ -123,6 +123,13 @@ export default function ManageJobs() {
             value={form.company}
             onChange={handleChange("company")}
           />
+          <TextField
+            fullWidth
+            label="Description"
+            margin="dense"
+            value={form.description}
+            onChange={handleChange("description")}
+          />
 
           {/* ▼ NEW: location selector */}
           <TextField
@@ -147,6 +154,24 @@ export default function ManageJobs() {
             margin="dense"
             value={form.experience}
             onChange={handleChange("experience")}
+          />
+          <TextField
+            fullWidth
+            type="number"
+            label="Min Salary"
+            inputProps={{ min: 0 }}
+            margin="dense"
+            value={form.minSalary}
+            onChange={handleChange("minSalary")}
+          />
+          <TextField
+            fullWidth
+            type="number"
+            label="Max Salary"
+            inputProps={{ min: 0 }}
+            margin="dense"
+            value={form.maxSalary}
+            onChange={handleChange("maxSalary")}
           />
         </DialogContent>
         <DialogActions>

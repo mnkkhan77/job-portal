@@ -1,22 +1,25 @@
+// hooks/useJobs.js
 import { useEffect, useState } from "react";
-import { getJob } from "../../api/jobs/index";
+import { listJobs } from "../../api/jobs/index"; // Your modified API function
 
-export default function useJob(id) {
-  const [job, setJob] = useState(null);
+export default function useJobs({ filters = {}, page = 0, size = 10 }) {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
-    if (!id) return;
-
     setLoading(true);
-    getJob(id)
-      .then((res) => setJob(res.data))
-      .catch((err) => {
-        // console.error("Failed to fetch job:", err);
-        setJob(null);
-      })
-      .finally(() => setLoading(false));
-  }, [id]);
 
-  return { job, loading };
+    // Make the API call with page, size, and filters
+    listJobs({ ...filters, page, size })
+      .then((res) => {
+        const jobs = res.data.content || []; // assuming 'content' holds the job data
+        setData(jobs);
+        setHasMore(!res.data.last); // `last: false` indicates more pages
+      })
+      .catch(() => setData([]))
+      .finally(() => setLoading(false));
+  }, [filters, page, size]);
+
+  return { data, loading, hasMore };
 }

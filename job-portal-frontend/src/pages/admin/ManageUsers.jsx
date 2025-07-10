@@ -138,6 +138,7 @@ export default function ManageUsers() {
           >
             <MenuItem value="user">user</MenuItem>
             <MenuItem value="admin">admin</MenuItem>
+            <MenuItem value="recruiter">recruiter</MenuItem>
           </TextField>
         </DialogContent>
         <DialogActions>
