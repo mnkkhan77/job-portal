@@ -38,10 +38,3 @@ export default function useAdminMetrics() {
 
   return { ...metrics, loading };
 }
-
-/* OPTIONAL helper for a manual refresh (call from any component)
-export const refreshAdminMetrics = async () => {
-  cachedMetrics = null;
-  return getAdminMetrics().then((d) => (cachedMetrics = d));
-};
-*/

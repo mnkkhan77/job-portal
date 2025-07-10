@@ -22,6 +22,9 @@ const useManageJobs = () => {
     company: "",
     location: "",
     experience: "",
+    minSalary: "",
+    maxSalary: "",
+    description: "",
   });
 
   const fetchJobs = async () => {
@@ -50,7 +53,17 @@ const useManageJobs = () => {
 
   const openModal = (job = null) => {
     setEditing(job);
-    setForm(job || { title: "", company: "", location: "", experience: "" });
+    setForm(
+      job || {
+        title: "",
+        company: "",
+        location: "",
+        experience: "",
+        minSalary: "",
+        maxSalary: "",
+        description: "",
+      }
+    );
     setOpen(true);
   };
 
@@ -61,13 +74,24 @@ const useManageJobs = () => {
 
   const saveForm = async () => {
     try {
+      const jobData = {
+        title: form.title,
+        company: form.company,
+        location: form.location,
+        experience: form.experience,
+        minSalary: Number(form.minSalary),
+        maxSalary: Number(form.maxSalary),
+        description: form.description || "",
+        postedBy: user.id,
+      };
+
       if (editing) {
-        const res = await updateAdminJob(editing.id, form);
+        const res = await updateAdminJob(editing.id, jobData);
         const updated = jobs.map((j) => (j.id === editing.id ? res.data : j));
         setJobs(updated);
         cachedJobs = updated;
       } else {
-        const res = await createAdminJob(form);
+        const res = await createAdminJob(jobData);
         const updated = [...jobs, res.data];
         setJobs(updated);
         cachedJobs = updated;

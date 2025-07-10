@@ -12,11 +12,10 @@ export default function JobDetails() {
   const { job, loading } = useJob(id);
   const navigate = useNavigate();
 
-  const { role } = useAuth(); // ✅ Add this line
+  const { role } = useAuth();
   const { handleApply, handleSave, canSave, canApply, loadingApplied } =
     useJobActions(job || {});
 
-  // Loading the job itself
   if (loading)
     return (
       <Box textAlign="center" py={8}>

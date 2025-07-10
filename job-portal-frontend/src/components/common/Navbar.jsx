@@ -109,6 +109,12 @@ const Navbar = ({ navLinks }) => {
                         Admin Dashboard
                       </MenuItem>
                     )}
+                    {role === "recruiter" && (
+                      <MenuItem onClick={() => navigate("/recruiter/jobs")}>
+                        Recruiter Dashboard
+                      </MenuItem>
+                    )}
+
                     <MenuItem onClick={() => navigate("/profile")}>
                       My Profile
                     </MenuItem>
