@@ -38,6 +38,10 @@ import ChangePassword from "./pages/ChangePassword";
 import Unauthorized from "./pages/common/Unauthorized";
 import AppliedJobs from "./pages/jobs/AppliedJobs";
 
+/* ——— recruiter ——— */
+import RecruiterJobs from "./pages/recruiter/RecruiterJobs";
+import RecruiterProfile from "./pages/recruiter/RecruiterProfile";
+
 /* ——— navbar links ——— */
 const navLinks = [
   { title: "Home", href: "/" },
@@ -82,6 +86,10 @@ function AppShell() {
               <Route path="users" element={<ManageUsers />} />
             </Route>
           </Route>
+
+          {/* recruiter-protected */}
+          <Route path="/recruiter/profile" element={<RecruiterProfile />} />
+          <Route path="/recruiter/jobs" element={<RecruiterJobs />} />
 
           {/* info */}
           <Route path="/about" element={<About />} />
