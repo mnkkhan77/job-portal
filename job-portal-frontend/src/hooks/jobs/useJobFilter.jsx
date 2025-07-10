@@ -1,10 +1,7 @@
 import { useMemo, useState } from "react";
 
-// maps experience text to numeric band for sorting
 const expValue = (exp) => {
-  if (!exp) return 0;
-  const match = exp.match(/(\d+)/);
-  return match ? parseInt(match[1], 10) : 0;
+  return typeof exp === "number" ? exp : 0;
 };
 
 export default function useJobFilter(allJobs = []) {
@@ -42,10 +39,10 @@ export default function useJobFilter(allJobs = []) {
     /* --- sort --- */
     switch (sortBy) {
       case "salaryHigh":
-        list.sort((a, b) => b.salary - a.salary);
+        list.sort((a, b) => b.minSalary - a.minSalary);
         break;
       case "salaryLow":
-        list.sort((a, b) => a.salary - b.salary);
+        list.sort((a, b) => a.minSalary - b.minSalary);
         break;
       case "expHigh":
         list.sort((a, b) => expValue(b.experience) - expValue(a.experience));
