@@ -21,7 +21,7 @@ public class SavedJob {
     private User user;
     @ManyToOne(optional = false)
     private Job job;
-    @Lob
+
     private LocalDateTime savedAt;
 
 }

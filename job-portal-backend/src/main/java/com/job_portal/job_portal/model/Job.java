@@ -27,7 +27,6 @@ public class Job {
     @Column(nullable = false)
     private Integer maxSalary;
 
-    @Lob
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

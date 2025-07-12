@@ -40,11 +40,13 @@ public class AdminJobController {
 
 
     @PutMapping("/{id}")
-    public Job updateJob(@PathVariable Long id,
-                         @RequestBody JobCreateDto dto,
-                         @AuthenticationPrincipal MyUserDetails ud) {
-        return svc.updateJob(id, dto, ud.getUser());
+    public JobDto updateJob(@PathVariable Long id,
+                            @RequestBody JobCreateDto dto,
+                            @AuthenticationPrincipal MyUserDetails ud) {
+        Job job = svc.updateJob(id, dto, ud.getUser());
+        return JobDto.from(job);
     }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
