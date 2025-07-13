@@ -47,7 +47,6 @@ const Navbar = ({ navLinks }) => {
   } = useNavBarLogic();
 
   const theme1 = useTheme();
-  console.log("Theme primary color:", theme1.palette.primary.main);
 
   return (
     <>
