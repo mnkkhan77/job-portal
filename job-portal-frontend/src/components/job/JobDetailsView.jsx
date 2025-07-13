@@ -1,10 +1,14 @@
 // src/components/job/JobDetailsView
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import {
   Box,
   Button,
   CircularProgress,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 
 export default function JobDetailsView({
@@ -39,55 +43,116 @@ export default function JobDetailsView({
       return `₹ ${salary}`;
     }
   };
+  const theme = useTheme();
 
   return (
-    <Box sx={{ py: 6, px: { xs: 2, sm: 4, md: 8 }, maxWidth: 800, mx: "auto" }}>
-      <Typography variant="h4" gutterBottom>
-        {job.title}
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom>
-        {job.company} — {job.location}
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        Salary: {formatSalary(job.minSalary)} - {formatSalary(job.maxSalary)}
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        Experience Required: {job.experience}+ Years
-      </Typography>
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        sx={{ mt: 3, whiteSpace: "pre-line" }}
+    <Box sx={{ py: 6, px: { xs: 2, sm: 4, md: 8 }, maxWidth: 900, mx: "auto" }}>
+      <Box
+        sx={{
+          backgroundColor: "background.paper",
+          boxShadow: 3,
+          borderRadius: 3,
+          p: { xs: 3, sm: 4 },
+          border: (theme) =>
+            theme.palette.mode === "light"
+              ? "1px solid #e0e0e0"
+              : "1px solid #333",
+        }}
       >
-        {job.description}
-      </Typography>
+        {/* Job Title & Company */}
+        <Typography
+          variant="h4"
+          align="center"
+          fontWeight={900}
+          gutterBottom
+          sx={{
+            letterSpacing: 0.5,
+            textDecoration: "underline",
+            color: theme.palette.mode === "light" ? "#3b2d2d" : undefined,
+          }}
+        >
+          {job.title}
+        </Typography>
 
-      {role !== "admin" && role !== "recruiter" && (
-        <Stack direction="row" spacing={2} sx={{ mt: 4 }}>
-          {loadingApplied ? (
-            <CircularProgress size={24} />
-          ) : canApply ? (
-            <Button
-              onClick={onApply}
-              variant="contained"
-              color="secondary"
-              fullWidth
-            >
-              Apply Now
-            </Button>
-          ) : (
-            <Button disabled variant="outlined" fullWidth>
-              Already Applied
-            </Button>
-          )}
+        <Typography
+          variant="h6"
+          color="text.primary"
+          sx={{ textTransform: "uppercase", letterSpacing: 1, mb: 2 }}
+        >
+          {job.company} • {job.location}
+        </Typography>
 
-          {canSave && (
-            <Button variant="outlined" onClick={onSave}>
-              Save Job
-            </Button>
-          )}
+        {/* Key Details */}
+        <Stack
+          direction={{ xs: "column", lg: "row" }}
+          spacing={4}
+          // alignItems="center"
+          alignItems={{ xs: "flex-start", lg: "center" }}
+          flexWrap="wrap"
+          mt={2}
+          mb={3}
+        >
+          <Typography variant="body1" color="text.primary">
+            <WorkOutlineOutlinedIcon fontSize="small" sx={{ mr: 1 }} />{" "}
+            <strong>Experience:</strong> {job.experience}+ Years
+          </Typography>
+          <Typography variant="body1" color="text.primary">
+            <AttachMoneyIcon fontSize="small" sx={{ mr: 1 }} />{" "}
+            <strong>Salary:</strong> {formatSalary(job.minSalary)} -{" "}
+            {formatSalary(job.maxSalary)}
+          </Typography>
+          <Typography variant="body1" color="text.primary">
+            <LocationOnIcon fontSize="small" sx={{ mr: 1 }} />{" "}
+            <strong>Location:</strong> {job.location}
+          </Typography>
         </Stack>
-      )}
+
+        <Typography
+          variant="body1"
+          color="text.primary"
+          sx={{
+            whiteSpace: "pre-line",
+            lineHeight: 1.8,
+            fontSize: "1rem",
+            mt: 3,
+          }}
+        >
+          {job.description}
+        </Typography>
+
+        {/* Action Buttons */}
+        {role !== "admin" && role !== "recruiter" && (
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={2}
+            sx={{ mt: 5 }}
+          >
+            {loadingApplied ? (
+              <CircularProgress size={24} />
+            ) : canApply ? (
+              <Button
+                onClick={onApply}
+                variant="contained"
+                color="secondary"
+                fullWidth
+                sx={{ fontWeight: 600 }}
+              >
+                Apply Now
+              </Button>
+            ) : (
+              <Button disabled variant="outlined" fullWidth>
+                Already Applied
+              </Button>
+            )}
+
+            {canSave && (
+              <Button variant="outlined" onClick={onSave} fullWidth>
+                Save Job
+              </Button>
+            )}
+          </Stack>
+        )}
+      </Box>
     </Box>
   );
 }

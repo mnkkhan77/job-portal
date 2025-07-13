@@ -1,7 +1,10 @@
 import {
   Brightness4,
   Brightness7,
+  Dashboard as DashboardIcon,
   Menu as MenuIcon,
+  People as PeopleIcon,
+  Work as WorkIcon,
 } from "@mui/icons-material";
 import {
   AppBar,
@@ -55,21 +58,22 @@ const AdminDashboardLayout = () => {
       borderRadius: 1,
       mx: 1,
       my: 0.5,
-      backgroundColor: isActive ? theme.palette.action.selected : "transparent",
+      backgroundColor: isActive ? theme.palette.primary.main : "transparent",
       color: isActive
         ? theme.palette.text.primary
         : theme.palette.text.secondary,
       "&:hover": {
         backgroundColor: theme.palette.action.hover,
       },
+      transition: "all 0.3s ease",
     };
   };
 
   // Sidebar items defined as an array
   const sidebarItems = [
-    { label: "Dashboard", path: "/admin" },
-    { label: "Manage Jobs", path: "/admin/jobs" },
-    { label: "Manage Users", path: "/admin/users" },
+    { label: "Dashboard", path: "/admin", icon: <DashboardIcon /> },
+    { label: "Manage Jobs", path: "/admin/jobs", icon: <WorkIcon /> },
+    { label: "Manage Users", path: "/admin/users", icon: <PeopleIcon /> },
   ];
 
   const listItemTextStyle = {
@@ -85,6 +89,7 @@ const AdminDashboardLayout = () => {
           p: 2,
           fontWeight: "bold",
           color: theme.palette.text.primary,
+          textAlign: "center",
         }}
       >
         Admin Panel
@@ -92,12 +97,13 @@ const AdminDashboardLayout = () => {
 
       <Divider />
       <List>
-        {sidebarItems.map(({ label, path }) => (
+        {sidebarItems.map(({ label, path, icon }) => (
           <ListItem disablePadding key={path}>
             <ListItemButton
               onClick={() => navigate(path)}
               sx={getItemStyles(path)}
             >
+              <Box sx={{ mr: 2 }}>{icon}</Box>
               <ListItemText
                 primary={label}
                 primaryTypographyProps={{
@@ -122,6 +128,7 @@ const AdminDashboardLayout = () => {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          bgcolor: theme.palette.primary,
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -153,7 +160,7 @@ const AdminDashboardLayout = () => {
             </Tooltip>
 
             <IconButton onClick={openMenu}>
-              <Avatar sx={{ width: 30, height: 30 }}>
+              <Avatar sx={{ width: 35, height: 35, fontSize: 18 }}>
                 {username?.[0]?.toUpperCase() || "U"}
               </Avatar>
             </IconButton>
@@ -193,6 +200,7 @@ const AdminDashboardLayout = () => {
               width: drawerWidth,
               bgcolor: theme.palette.background.paper,
               color: theme.palette.text.primary,
+              transition: "all 0.3s ease",
             },
           }}
         >
@@ -209,6 +217,7 @@ const AdminDashboardLayout = () => {
               width: drawerWidth,
               bgcolor: theme.palette.background.paper,
               color: theme.palette.text.primary,
+              transition: "all 0.3s ease",
             },
           }}
           open
@@ -225,6 +234,7 @@ const AdminDashboardLayout = () => {
           p: 3,
           mt: 8,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+          bgcolor: theme.palette.background.default,
         }}
       >
         <Outlet />

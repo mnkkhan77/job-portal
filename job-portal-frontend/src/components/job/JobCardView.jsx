@@ -90,7 +90,7 @@ export default function JobCardView({ job, saved, canSave, onToggle }) {
       <CardActions>
         <Button
           size="small"
-          variant="outlined"
+          variant="contained"
           fullWidth
           component={RouterLink}
           to={`/job/${job.id}`}

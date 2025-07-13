@@ -72,9 +72,13 @@ export default function ManageJobs() {
                 <TableCell>{job.title}</TableCell>
                 <TableCell>{job.company}</TableCell>
                 <TableCell>{job.location}</TableCell>
-                <TableCell>{job.experience}</TableCell>
+                <TableCell>{job.experience}+ Years</TableCell>
                 <TableCell align="center">
-                  <IconButton color="primary" onClick={() => openModal(job)}>
+                  <IconButton
+                    color="primary"
+                    contained
+                    onClick={() => openModal(job)}
+                  >
                     <EditIcon />
                   </IconButton>
                   <IconButton color="error" onClick={() => removeJob(job.id)}>
@@ -175,7 +179,9 @@ export default function ManageJobs() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeModal}>Cancel</Button>
+          <Button variant="contained" onClick={closeModal}>
+            Cancel
+          </Button>
           <Button variant="contained" onClick={saveForm}>
             {editing ? "Update" : "Create"}
           </Button>

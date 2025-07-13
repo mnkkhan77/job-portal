@@ -33,7 +33,8 @@ export default function CustomThemeProvider({ children }) {
         palette: {
           mode,
           primary: {
-            main: "#3A5A40",
+            // main: "#3A5A40",
+            main: mode === "light" ? "#3A5A40" : "#A3D9A5",
           },
           secondary: {
             main: "#FF6584",
@@ -43,7 +44,8 @@ export default function CustomThemeProvider({ children }) {
             paper: mode === "light" ? "#588157" : "#2c2c40",
           },
           text: {
-            primary: mode === "light" ? "#1a1a1a" : "#f3f3f3",
+            // primary: mode === "light" ? "#1a1a1a" : "#f3f3f3",
+            primary: mode === "light" ? "#000000" : "#f3f3f3",
             secondary: mode === "light" ? "#4a4a4a" : "#bbbbbb",
           },
         },
