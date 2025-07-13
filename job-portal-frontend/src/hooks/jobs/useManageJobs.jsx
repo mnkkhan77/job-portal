@@ -82,7 +82,7 @@ const useManageJobs = () => {
         minSalary: Number(form.minSalary),
         maxSalary: Number(form.maxSalary),
         description: form.description || "",
-        postedBy: user.id,
+        postedBy: user,
       };
 
       if (editing) {
