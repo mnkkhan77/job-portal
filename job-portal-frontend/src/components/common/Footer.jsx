@@ -34,6 +34,7 @@ export default function Footer() {
       component="footer"
       sx={{
         mt: "auto",
+        width: "100%",
         py: 5,
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
@@ -54,10 +55,10 @@ export default function Footer() {
           </Grid>
 
           {/* Dynamic footer sections */}
-          {footerSections.map(({ title, links }) => (
-            <Grid item xs={12} md={4} key={title}>
+          {footerSections.map(({ label, links }) => (
+            <Grid xs={12} md={4} key={label}>
               <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                {title}
+                {label}
               </Typography>
               <Stack spacing={0.5}>
                 {links.map(({ label, href }) => (
