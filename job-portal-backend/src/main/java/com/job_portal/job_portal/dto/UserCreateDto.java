@@ -17,5 +17,6 @@ public class UserCreateDto {
     private String email;
     @NotBlank
     private String password;
+    @Builder.Default
     private String role = "user";
 }

@@ -22,5 +22,6 @@ public class Application {
     @ManyToOne(optional = false)
     private Job job;
 
+    @Builder.Default
     private LocalDateTime appliedAt = LocalDateTime.now();
 }

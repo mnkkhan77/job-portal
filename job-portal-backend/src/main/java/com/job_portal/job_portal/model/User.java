@@ -43,6 +43,7 @@ public class User implements UserDetails {
     /**
      * user │ admin
      */
+    @Builder.Default
     @Column(nullable = false)
     private String role = "user";
 
