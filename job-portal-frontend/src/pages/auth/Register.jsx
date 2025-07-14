@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 import { register } from "../../api/auth";
 import { saveAuth } from "../../utils/authStorage";
+import BreadcrumbsNav from "./../../components/common/BreadcrumbsNav";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -84,83 +85,86 @@ export default function Register() {
   };
 
   return (
-    <Box display="flex" justifyContent="center" mt={8}>
-      <Paper elevation={3} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
-        <Typography variant="h5" gutterBottom>
-          Register
-        </Typography>
+    <>
+      <BreadcrumbsNav path={["Home", "Register"]} />
+      <Box display="flex" justifyContent="center" mt={8}>
+        <Paper elevation={3} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
+          <Typography variant="h5" gutterBottom>
+            Register
+          </Typography>
 
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
 
-        <TextField
-          label="Username"
-          fullWidth
-          margin="normal"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          error={!!formErrors.name}
-          helperText={formErrors.name}
-        />
+          <TextField
+            label="Username"
+            fullWidth
+            margin="normal"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            error={!!formErrors.name}
+            helperText={formErrors.name}
+          />
 
-        <TextField
-          label="Email"
-          fullWidth
-          margin="normal"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          error={!!formErrors.email}
-          helperText={formErrors.email}
-        />
+          <TextField
+            label="Email"
+            fullWidth
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={!!formErrors.email}
+            helperText={formErrors.email}
+          />
 
-        <TextField
-          label="Password"
-          fullWidth
-          type="password"
-          margin="normal"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          error={!!formErrors.password}
-          helperText={formErrors.password}
-        />
+          <TextField
+            label="Password"
+            fullWidth
+            type="password"
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={!!formErrors.password}
+            helperText={formErrors.password}
+          />
 
-        <TextField
-          label="Confirm Password"
-          fullWidth
-          type="password"
-          margin="normal"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          error={!!formErrors.confirmPassword}
-          helperText={formErrors.confirmPassword}
-        />
+          <TextField
+            label="Confirm Password"
+            fullWidth
+            type="password"
+            margin="normal"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={!!formErrors.confirmPassword}
+            helperText={formErrors.confirmPassword}
+          />
 
-        <TextField
-          select
-          fullWidth
-          label="Role"
-          margin="normal"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          error={!!formErrors.role}
-          helperText={formErrors.role}
-        >
-          <MenuItem value="user">User</MenuItem>
-          <MenuItem value="recruiter">Recruiter</MenuItem>
-        </TextField>
+          <TextField
+            select
+            fullWidth
+            label="Role"
+            margin="normal"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            error={!!formErrors.role}
+            helperText={formErrors.role}
+          >
+            <MenuItem value="user">User</MenuItem>
+            <MenuItem value="recruiter">Recruiter</MenuItem>
+          </TextField>
 
-        <Button
-          fullWidth
-          variant="contained"
-          sx={{ mt: 2 }}
-          onClick={handleRegister}
-        >
-          Register
-        </Button>
-      </Paper>
-    </Box>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 2 }}
+            onClick={handleRegister}
+          >
+            Register
+          </Button>
+        </Paper>
+      </Box>
+    </>
   );
 }

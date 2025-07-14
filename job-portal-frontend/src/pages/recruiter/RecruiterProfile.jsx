@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import useRecruiterProfile from "../../hooks/recruiter/useRecruiterProfile";
+import BreadcrumbsNav from "./../../components/common/BreadcrumbsNav";
 
 export default function RecruiterProfile() {
   const {
@@ -27,46 +28,49 @@ export default function RecruiterProfile() {
   <CircularProgress />;
 
   return (
-    <Container sx={{ py: 6 }}>
-      <Typography variant="h4" gutterBottom>
-        Recruiter Profile
-      </Typography>
+    <>
+      <BreadcrumbsNav path={["Recruiter", "Profile"]} />
+      <Container sx={{ py: 6 }}>
+        <Typography variant="h4" gutterBottom>
+          Recruiter Profile
+        </Typography>
 
-      <Card sx={{ maxWidth: 500 }}>
-        <CardContent>
-          <Stack spacing={2}>
-            <TextField
-              label="Username"
-              value={form.username}
-              onChange={handleChange("username")}
-              fullWidth
-            />
-            <TextField
-              label="Email"
-              value={form.email}
-              onChange={handleChange("email")}
-              fullWidth
-            />
-            <TextField label="Role" value="recruiter" disabled fullWidth />
+        <Card sx={{ maxWidth: 500 }}>
+          <CardContent>
+            <Stack spacing={2}>
+              <TextField
+                label="Username"
+                value={form.username}
+                onChange={handleChange("username")}
+                fullWidth
+              />
+              <TextField
+                label="Email"
+                value={form.email}
+                onChange={handleChange("email")}
+                fullWidth
+              />
+              <TextField label="Role" value="recruiter" disabled fullWidth />
 
-            <Button variant="contained" onClick={handleSave}>
-              Save Changes
-            </Button>
+              <Button variant="contained" onClick={handleSave}>
+                Save Changes
+              </Button>
 
-            <Typography variant="subtitle1" sx={{ mt: 2 }}>
-              Posted Jobs: <strong>{jobsPosted}</strong>
-            </Typography>
+              <Typography variant="subtitle1" sx={{ mt: 2 }}>
+                Posted Jobs: <strong>{jobsPosted}</strong>
+              </Typography>
 
-            <Button variant="outlined" onClick={handleGoToJobs}>
-              Manage Posted Jobs
-            </Button>
+              <Button variant="outlined" onClick={handleGoToJobs}>
+                Manage Posted Jobs
+              </Button>
 
-            <Button component={Link} to="/change-password" variant="text">
-              Change Password
-            </Button>
-          </Stack>
-        </CardContent>
-      </Card>
-    </Container>
+              <Button component={Link} to="/change-password" variant="text">
+                Change Password
+              </Button>
+            </Stack>
+          </CardContent>
+        </Card>
+      </Container>
+    </>
   );
 }

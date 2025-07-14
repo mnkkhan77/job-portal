@@ -3,6 +3,7 @@ import { Box, CircularProgress, Container, Typography } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import JobCard from "../../components/job/JobCard";
 import { useAuth } from "../../hooks/auth/useAuth";
+import BreadcrumbsNav from "./../../components/common/BreadcrumbsNav";
 import useSavedJobs from "./../../hooks/jobs/useSavedJobs";
 
 export default function SavedJobs() {
@@ -13,6 +14,7 @@ export default function SavedJobs() {
 
   return (
     <Container sx={{ py: 4 }}>
+      <BreadcrumbsNav path={["Home", "Saved Jobs"]} />
       <Typography variant="h4" gutterBottom>
         Saved Jobs
       </Typography>

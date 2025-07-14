@@ -30,6 +30,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { logout } from "../../api/auth";
 import { ColorModeContext } from "../../contexts/CustomThemeProvider";
 import { useAuth } from "../../hooks/auth/useAuth";
+import BreadcrumbsNav from "./../../components/common/BreadcrumbsNav";
 
 const drawerWidth = 240;
 
@@ -119,127 +120,130 @@ const AdminDashboardLayout = () => {
   );
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+    <>
+      <BreadcrumbsNav path={["Home", "Profile"]} />
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
 
-      {/* Top AppBar */}
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-          bgcolor: theme.palette.primary,
-        }}
-      >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* Mobile menu icon */}
-          <IconButton
-            color="inherit"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          {/* Admin Title */}
-          <Typography variant="h6" noWrap component="div">
-            Admin Dashboard
-          </Typography>
-
-          {/* Right-side: Theme toggle + Avatar menu */}
-          <Box>
-            <Tooltip title="Toggle theme">
-              <IconButton onClick={colorMode.toggleColorMode} color="inherit">
-                {theme.palette.mode === "dark" ? (
-                  <Brightness7 />
-                ) : (
-                  <Brightness4 />
-                )}
-              </IconButton>
-            </Tooltip>
-
-            <IconButton onClick={openMenu}>
-              <Avatar sx={{ width: 35, height: 35, fontSize: 18 }}>
-                {username?.[0]?.toUpperCase() || "U"}
-              </Avatar>
+        {/* Top AppBar */}
+        <AppBar
+          position="fixed"
+          sx={{
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+            ml: { sm: `${drawerWidth}px` },
+            bgcolor: theme.palette.primary,
+          }}
+        >
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            {/* Mobile menu icon */}
+            <IconButton
+              color="inherit"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ display: { sm: "none" } }}
+            >
+              <MenuIcon />
             </IconButton>
 
-            <Menu
-              anchorEl={menuAnchor}
-              open={Boolean(menuAnchor)}
-              onClose={closeMenu}
-            >
-              <MenuItem disabled>Hello, {username}</MenuItem>
-              <MenuItem onClick={() => navigate("/profile")}>
-                My Profile
-              </MenuItem>
-              <MenuItem onClick={() => navigate("/")}>Public Site</MenuItem>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Menu>
-          </Box>
-        </Toolbar>
-      </AppBar>
+            {/* Admin Title */}
+            <Typography variant="h6" noWrap component="div">
+              Admin Dashboard
+            </Typography>
 
-      {/* Sidebar Drawer */}
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="admin sidebar"
-      >
-        {/* Mobile drawer */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{ keepMounted: true }}
+            {/* Right-side: Theme toggle + Avatar menu */}
+            <Box>
+              <Tooltip title="Toggle theme">
+                <IconButton onClick={colorMode.toggleColorMode} color="inherit">
+                  {theme.palette.mode === "dark" ? (
+                    <Brightness7 />
+                  ) : (
+                    <Brightness4 />
+                  )}
+                </IconButton>
+              </Tooltip>
+
+              <IconButton onClick={openMenu}>
+                <Avatar sx={{ width: 35, height: 35, fontSize: 18 }}>
+                  {username?.[0]?.toUpperCase() || "U"}
+                </Avatar>
+              </IconButton>
+
+              <Menu
+                anchorEl={menuAnchor}
+                open={Boolean(menuAnchor)}
+                onClose={closeMenu}
+              >
+                <MenuItem disabled>Hello, {username}</MenuItem>
+                <MenuItem onClick={() => navigate("/profile")}>
+                  My Profile
+                </MenuItem>
+                <MenuItem onClick={() => navigate("/")}>Public Site</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </Box>
+          </Toolbar>
+        </AppBar>
+
+        {/* Sidebar Drawer */}
+        <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          aria-label="admin sidebar"
+        >
+          {/* Mobile drawer */}
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{ keepMounted: true }}
+            sx={{
+              display: { xs: "block", sm: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+                bgcolor: theme.palette.background.paper,
+                color: theme.palette.text.primary,
+                transition: "all 0.3s ease",
+              },
+            }}
+          >
+            {drawer}
+          </Drawer>
+
+          {/* Permanent drawer */}
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: "none", sm: "block" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+                bgcolor: theme.palette.background.paper,
+                color: theme.palette.text.primary,
+                transition: "all 0.3s ease",
+              },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Box>
+
+        {/* Main Content */}
+        <Box
+          component="main"
           sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-              bgcolor: theme.palette.background.paper,
-              color: theme.palette.text.primary,
-              transition: "all 0.3s ease",
-            },
+            flexGrow: 1,
+            p: 3,
+            mt: 8,
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+            bgcolor: theme.palette.background.default,
           }}
         >
-          {drawer}
-        </Drawer>
-
-        {/* Permanent drawer */}
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-              bgcolor: theme.palette.background.paper,
-              color: theme.palette.text.primary,
-              transition: "all 0.3s ease",
-            },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
+          <Outlet />
+        </Box>
       </Box>
-
-      {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          mt: 8,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          bgcolor: theme.palette.background.default,
-        }}
-      >
-        <Outlet />
-      </Box>
-    </Box>
+    </>
   );
 };
 

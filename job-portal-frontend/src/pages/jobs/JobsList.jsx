@@ -5,6 +5,7 @@ import JobCard from "../../components/job/JobCard";
 import JobSearchBar from "../../components/job/JobSearch/JobSearchBar";
 import useJobFilter from "../../hooks/jobs/useJobFilter";
 import useJobs from "../../hooks/useJobs";
+import BreadcrumbsNav from "./../../components/common/BreadcrumbsNav";
 
 const expSort = (a, b) => {
   const num = (s) =>
@@ -73,6 +74,7 @@ export default function JobsList() {
 
   return (
     <Box sx={{ px: { xs: 2, md: 4 }, py: 4 }}>
+      <BreadcrumbsNav path={["Home"]} />
       <JobSearchBar
         query={query}
         location={location}

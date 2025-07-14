@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 import useJob from "../../hooks/jobs/useJob";
 import { useJobActions } from "../../hooks/jobs/useJobActions";
+import BreadcrumbsNav from "./../common/BreadcrumbsNav";
 import JobDetailsView from "./JobDetailsView";
 
 export default function JobDetails() {
@@ -13,8 +14,14 @@ export default function JobDetails() {
   const navigate = useNavigate();
 
   const { role } = useAuth();
-  const { handleApply, handleSave, canSave, canApply, loadingApplied } =
-    useJobActions(job || {});
+  const {
+    handleApply,
+    handleSave,
+    canSave,
+    isSaved,
+    canApply,
+    loadingApplied,
+  } = useJobActions(job || {});
 
   if (loading)
     return (
@@ -34,14 +41,18 @@ export default function JobDetails() {
     );
 
   return (
-    <JobDetailsView
-      job={job}
-      onApply={handleApply}
-      onSave={handleSave}
-      canApply={canApply}
-      canSave={canSave}
-      loadingApplied={loadingApplied}
-      role={role}
-    />
+    <>
+      <BreadcrumbsNav path={["Home", "Job Details"]} />
+      <JobDetailsView
+        job={job}
+        onApply={handleApply}
+        onSave={handleSave}
+        isSaved={isSaved}
+        canApply={canApply}
+        canSave={canSave}
+        loadingApplied={loadingApplied}
+        role={role}
+      />
+    </>
   );
 }

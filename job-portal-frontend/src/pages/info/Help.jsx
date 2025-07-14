@@ -8,6 +8,7 @@ import {
   Container,
   Typography,
 } from "@mui/material";
+import BreadcrumbsNav from "./../../components/common/BreadcrumbsNav";
 
 const Help = () => {
   const faqs = [
@@ -29,28 +30,31 @@ const Help = () => {
   ];
 
   return (
-    <Container maxWidth="md" sx={{ py: 6 }}>
-      <Typography variant="h4" gutterBottom>
-        Help Center
-      </Typography>
-      <Typography variant="body1" paragraph>
-        Browse frequently asked questions or contact our support team for more
-        help.
-      </Typography>
+    <>
+      <BreadcrumbsNav path={["Home", "Help"]} />
+      <Container maxWidth="md" sx={{ py: 6 }}>
+        <Typography variant="h4" gutterBottom>
+          Help Center
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Browse frequently asked questions or contact our support team for more
+          help.
+        </Typography>
 
-      <Box sx={{ mt: 4 }}>
-        {faqs.map((faq, index) => (
-          <Accordion key={index}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="subtitle1">{faq.question}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography variant="body2">{faq.answer}</Typography>
-            </AccordionDetails>
-          </Accordion>
-        ))}
-      </Box>
-    </Container>
+        <Box sx={{ mt: 4 }}>
+          {faqs.map((faq, index) => (
+            <Accordion key={index}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="subtitle1">{faq.question}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2">{faq.answer}</Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+        </Box>
+      </Container>
+    </>
   );
 };
 

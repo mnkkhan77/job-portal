@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { login as loginApi } from "../../api/auth";
 import { saveAuth } from "../../utils/authStorage";
+import BreadcrumbsNav from "./../../components/common/BreadcrumbsNav";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -52,43 +53,46 @@ export default function Login() {
   };
 
   return (
-    <Box display="flex" justifyContent="center" mt={8}>
-      <Paper sx={{ p: 4, width: "100%", maxWidth: 400 }}>
-        <Typography variant="h5" gutterBottom>
-          Login
-        </Typography>
-
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            label="Username"
-            margin="normal"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            fullWidth
-            label="Password"
-            type="password"
-            margin="normal"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+    <>
+      <BreadcrumbsNav path={["Home", "Login"]} />
+      <Box display="flex" justifyContent="center" mt={8}>
+        <Paper sx={{ p: 4, width: "100%", maxWidth: 400 }}>
+          <Typography variant="h5" gutterBottom>
             Login
-          </Button>
-
-          <Typography variant="body2" sx={{ mt: 2 }}>
-            Tip: <strong>admin</strong> logs in as admin role.
           </Typography>
-        </form>
-      </Paper>
-    </Box>
+
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <TextField
+              fullWidth
+              label="Username"
+              margin="normal"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              margin="normal"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+              Login
+            </Button>
+
+            <Typography variant="body2" sx={{ mt: 2 }}>
+              Tip: <strong>admin</strong> logs in as admin role.
+            </Typography>
+          </form>
+        </Paper>
+      </Box>
+    </>
   );
 }

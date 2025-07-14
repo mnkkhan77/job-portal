@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { listAppliedJobs, removeApplied } from "../../api/jobs/applied";
 import JobCard from "../../components/job/JobCard";
+import BreadcrumbsNav from "./../../components/common/BreadcrumbsNav";
 
 export default function AppliedJobs() {
   const [jobs, setJobs] = useState([]);
@@ -41,6 +42,7 @@ export default function AppliedJobs() {
 
   return (
     <Container sx={{ py: 4 }}>
+      <BreadcrumbsNav path={["Home", "Applied Jobs"]} />
       <Typography variant="h4" gutterBottom>
         Applied Jobs
       </Typography>
