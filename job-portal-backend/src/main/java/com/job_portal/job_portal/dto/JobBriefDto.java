@@ -13,6 +13,9 @@ public class JobBriefDto {
     private String title;
     private String company;
     private String location;
+    private Integer experience;
+    private Integer minSalary;
+    private Integer maxSalary;
 
     public static JobBriefDto from(Job j) {
         return JobBriefDto.builder()
@@ -20,6 +23,9 @@ public class JobBriefDto {
                 .title(j.getTitle())
                 .company(j.getCompany())
                 .location(j.getLocation())
+                .experience(j.getExperience())
+                .minSalary(j.getMinSalary())
+                .maxSalary(j.getMaxSalary())
                 .build();
     }
 }
