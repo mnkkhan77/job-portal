@@ -15,6 +15,7 @@ export default function JobDetailsView({
   job,
   onApply,
   onSave,
+  isSaved,
   canSave,
   canApply,
   loadingApplied,
@@ -147,7 +148,7 @@ export default function JobDetailsView({
 
             {canSave && (
               <Button variant="outlined" onClick={onSave} fullWidth>
-                Save Job
+                {isSaved ? "Unsave Job" : "Save Job"}
               </Button>
             )}
           </Stack>
