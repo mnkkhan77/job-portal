@@ -2,6 +2,7 @@ package com.job_portal.job_portal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Getter
@@ -33,4 +34,7 @@ public class Job {
     @JoinColumn(name = "posted_by")
     private User postedBy;
 
+    @Column(length = 1000)
+    @URL
+    private String jobLink;
 }

@@ -19,6 +19,7 @@ public class JobDto {
     private Integer maxSalary;
     private String description;
     Long postedBy;
+    private String jobLink;
 
     /* mapping helpers */
     public static JobDto from(Job j){
@@ -32,6 +33,7 @@ public class JobDto {
                 .maxSalary(j.getMaxSalary())
                 .description(j.getDescription())
                 .postedBy(j.getPostedBy() != null ? j.getPostedBy().getId() : null)
+                .jobLink(j.getJobLink())
                 .build();
     }
 
@@ -45,6 +47,7 @@ public class JobDto {
                 .minSalary(dto.getMinSalary())
                 .maxSalary(dto.getMaxSalary())
                 .description(dto.getDescription())
+                .jobLink(dto.getJobLink())
                 .build();
     }
 }
