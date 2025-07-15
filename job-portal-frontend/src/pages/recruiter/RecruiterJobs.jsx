@@ -201,6 +201,14 @@ export default function RecruiterJobs() {
               value={form.description}
               onChange={handleChange("description")}
             />
+            <TextField
+              fullWidth
+              label="Job Link"
+              margin="dense"
+              size="small"
+              value={form.jobLink}
+              onChange={handleChange("jobLink")}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={closeModal}>Cancel</Button>

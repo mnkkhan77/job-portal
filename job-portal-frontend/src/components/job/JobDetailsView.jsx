@@ -45,6 +45,7 @@ export default function JobDetailsView({
     }
   };
   const theme = useTheme();
+  const link = job.jobLink ? job.jobLink : "http://www.example.com";
 
   return (
     <Box sx={{ py: 6, px: { xs: 2, sm: 4, md: 8 }, maxWidth: 900, mx: "auto" }}>
@@ -132,7 +133,11 @@ export default function JobDetailsView({
               <CircularProgress size={24} />
             ) : canApply ? (
               <Button
+                component="a"
                 onClick={onApply}
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
                 variant="contained"
                 color="secondary"
                 fullWidth

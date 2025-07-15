@@ -210,6 +210,14 @@ export default function ManageJobs() {
               value={form.maxSalary}
               onChange={handleChange("maxSalary")}
             />
+            <TextField
+              fullWidth
+              label="Job Link"
+              margin="dense"
+              size="small"
+              value={form.jobLink}
+              onChange={handleChange("jobLink")}
+            />
           </DialogContent>
 
           <DialogActions sx={{ px: { xs: 1, sm: 3 }, pb: 2 }}>
