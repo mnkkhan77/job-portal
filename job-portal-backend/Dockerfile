@@ -1,12 +1,14 @@
+# Build stage: build the project using Maven
 FROM maven:3.9.10-openjdk-17 AS build
+
+WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Use a slim base Java image
+# Runtime stage: run the app on a lightweight JDK image
 FROM openjdk:17-jdk-slim
 
-# Optional: Install basic networking tools (for debugging)
-# Remove this section in production for smaller image size
+# Optional: install debugging tools (remove if not needed)
 RUN apt-get update && apt-get install -y \
     iputils-ping \
     curl \
@@ -14,14 +16,13 @@ RUN apt-get update && apt-get install -y \
     netcat \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory inside the container
 WORKDIR /app
 
-# Copy your JAR file into the image
-COPY target/job-portal-backend-0.0.1-SNAPSHOT.jar app.jar
+# Copy the built JAR from the build stage
+COPY --from=build /app/target/job-portal-backend-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the port your app runs on (adjust if needed)
+# Expose the port the app will run on
 EXPOSE 8080
 
-# Default command to run the app
+# Run the application
 CMD ["java", "-jar", "app.jar"]
