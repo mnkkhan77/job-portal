@@ -141,7 +141,7 @@ Job recommendations
 - Resume upload & parsing
 - Recruiter dashboard with analytics
 - Email notifications
-- Deployment on AWS/GCP/Vercel
+- AI chatbot integration
 
 🧑‍💻 Author
         Developed by Nasir Khan
