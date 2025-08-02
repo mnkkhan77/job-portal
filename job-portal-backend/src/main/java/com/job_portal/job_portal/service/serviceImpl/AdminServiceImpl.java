@@ -49,6 +49,7 @@ public class AdminServiceImpl implements AdminService {
         job.setMinSalary(dto.minSalary());
         job.setMaxSalary(dto.maxSalary());
         job.setDescription(dto.description());
+        job.setJobLink(dto.jobLink());
         job.setPostedBy(poster);
 
         return jobRepo.save(job);
@@ -65,6 +66,7 @@ public class AdminServiceImpl implements AdminService {
         job.setMinSalary(dto.minSalary());
         job.setMaxSalary(dto.maxSalary());
         job.setDescription(dto.description());
+        job.setJobLink(dto.jobLink());
 
         return jobRepo.save(job);
     }

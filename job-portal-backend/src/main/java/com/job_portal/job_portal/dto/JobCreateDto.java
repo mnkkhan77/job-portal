@@ -7,5 +7,7 @@ public record JobCreateDto(
         Integer experience,
         Integer minSalary,
         Integer maxSalary,
-        String description
-) {}
+        String description,
+        String jobLink
+) {
+}
